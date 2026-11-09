@@ -1,0 +1,88 @@
+{
+  "contract_result": {
+    "base_revision": "0123456789abcdef0123456789abcdef01234567",
+    "capability": "frontend.delivery",
+    "changed_paths": ["staging/frontend/src/Button.tsx"],
+    "evidence": {
+      "accessibility": {
+        "method": "keyboard and axe component check",
+        "output_sha256": "sha256:d4d3994c683a52de54f0a5ca1c63b328e32bd6f71515daad8aeb6838066e10e7",
+        "status": "passed",
+        "summary": "visible focus and accessible name verified"
+      },
+      "build": {
+        "command": "npm run build",
+        "exit_code": 0,
+        "output_sha256": "sha256:b6b03d9a58fc85d6de72876fe0b8f3aa071e0d069079afc3b1ffbcc558d8c0d5",
+        "summary": "production assets built"
+      },
+      "security": {
+        "method": "dependency and client-secret review",
+        "output_sha256": "sha256:dcb0ae3b1a114223912b486a74f3f61e91fcd96b9f7cac11a462fea2dc7de393",
+        "status": "passed",
+        "summary": "no new dependency or client secret introduced"
+      },
+      "tests": {
+        "command": "npm test -- Button",
+        "exit_code": 0,
+        "output_sha256": "sha256:7c5f1008e9e26c0bf62af50c130786af038baa6905587acd6d5babad5638c113",
+        "summary": "3 tests passed"
+      }
+    },
+    "files": {
+      "staging/frontend/src/Button.tsx": "export function Button() { return <button>Save</button>; }\n"
+    },
+    "produced": ["frontend-delivery"],
+    "provider": "frontend-standard",
+    "sections": {
+      "delivered": ["Button primitive uses shared theme tokens and visible focus."],
+      "gaps": ["No remaining gap in the requested component scope."],
+      "unverified": ["Full-application visual coverage was outside the requested scope."]
+    },
+    "status": "completed",
+    "unresolved": []
+  },
+  "provider_result": {
+    "base_revision": "0123456789abcdef0123456789abcdef01234567",
+    "capability": "frontend.delivery",
+    "changed_paths": ["staging/frontend/src/Button.tsx"],
+    "evidence": {
+      "accessibility": {
+        "method": "keyboard and axe component check",
+        "output_sha256": "sha256:d4d3994c683a52de54f0a5ca1c63b328e32bd6f71515daad8aeb6838066e10e7",
+        "status": "passed",
+        "summary": "visible focus and accessible name verified"
+      },
+      "build": {
+        "command": "npm run build",
+        "exit_code": 0,
+        "output_sha256": "sha256:b6b03d9a58fc85d6de72876fe0b8f3aa071e0d069079afc3b1ffbcc558d8c0d5",
+        "summary": "production assets built"
+      },
+      "security": {
+        "method": "dependency and client-secret review",
+        "output_sha256": "sha256:dcb0ae3b1a114223912b486a74f3f61e91fcd96b9f7cac11a462fea2dc7de393",
+        "status": "passed",
+        "summary": "no new dependency or client secret introduced"
+      },
+      "tests": {
+        "command": "npm test -- Button",
+        "exit_code": 0,
+        "output_sha256": "sha256:7c5f1008e9e26c0bf62af50c130786af038baa6905587acd6d5babad5638c113",
+        "summary": "3 tests passed"
+      }
+    },
+    "files": {
+      "staging/frontend/src/Button.tsx": "export function Button() { return <button>Save</button>; }\n"
+    },
+    "produced": ["frontend-delivery"],
+    "provider": "frontend-standard",
+    "sections": {
+      "delivered": ["Button primitive uses shared theme tokens and visible focus."],
+      "gaps": ["No remaining gap in the requested component scope."],
+      "unverified": ["Full-application visual coverage was outside the requested scope."]
+    },
+    "status": "completed",
+    "unresolved": []
+  }
+}

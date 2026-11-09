@@ -1,0 +1,86 @@
+{
+  "contract_result": {
+    "base_revision": "0123456789abcdef0123456789abcdef01234567",
+    "capability": "requirements.discovery",
+    "changed_paths": ["staging/requirements/requirements-analysis.md"],
+    "evidence": {
+      "source-register": [
+        {
+          "checksum": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source_id": "SRC-001"
+        }
+      ],
+      "traceability": [
+        {
+          "relation": "traces_to",
+          "source": "SRC-001",
+          "target": "requirements-analysis"
+        }
+      ]
+    },
+    "files": {
+      "staging/requirements/requirements-analysis.md": "# Requirements analysis\n\nDiscovery output; input to formal specification.\n"
+    },
+    "produced": ["requirements-analysis"],
+    "provider": "requirements-analysis",
+    "sections": {
+      "assumptions": ["Legal review will define the allowed retention range."],
+      "conflicts": ["No conflict found in the supplied source."],
+      "constraints": {
+        "confirmed": ["Retention changes require an audit entry."],
+        "preferences": ["Reuse the current administration surface when practical."]
+      },
+      "open_questions": ["Who approves the retention period?"],
+      "requirements": [
+        {
+          "id": "BR-001",
+          "statement": "Authorized records managers can define a retention period."
+        }
+      ]
+    },
+    "status": "completed",
+    "unresolved": ["Who approves the retention period?"]
+  },
+  "provider_result": {
+    "base_revision": "0123456789abcdef0123456789abcdef01234567",
+    "capability": "requirements.discovery",
+    "changed_paths": ["staging/requirements/requirements-analysis.md"],
+    "evidence": {
+      "source-register": [
+        {
+          "checksum": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source_id": "SRC-001"
+        }
+      ],
+      "traceability": [
+        {
+          "relation": "traces_to",
+          "source": "SRC-001",
+          "target": "requirements-analysis"
+        }
+      ]
+    },
+    "files": {
+      "staging/requirements/requirements-analysis.md": "# Requirements analysis\n\nDiscovery output; input to formal specification.\n"
+    },
+    "produced": ["requirements-analysis"],
+    "provider": "requirements-analysis",
+    "sections": {
+      "assumptions": ["Legal review will define the allowed retention range."],
+      "conflicts": ["No conflict found in the supplied source."],
+      "constraints": {
+        "confirmed": ["Retention changes require an audit entry."],
+        "preferences": ["Reuse the current administration surface when practical."]
+      },
+      "open_questions": ["Who approves the retention period?"],
+      "requirements": [
+        {
+          "id": "BR-001",
+          "statement": "Authorized records managers can define a retention period."
+        }
+      ]
+    },
+    "status": "completed",
+    "unresolved": ["Who approves the retention period?"]
+  }
+}

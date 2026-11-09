@@ -1,0 +1,29 @@
+id: architecture.sdd
+version: 1
+dispatch:
+  required_inputs: [components, scenarios, requirements]
+  optional_inputs: [implementation_constraints]
+  task_template: references/prompts/architecture-sdd.md
+  readable_scope: [docs]
+  writable_scope: [staging/architecture]
+  forbidden_actions: [canonical_state_write, baseline_approval_inference]
+result:
+  required_sections: [scope, interfaces, behavior, verification]
+  allowed_formats: [markdown, yaml]
+  required_evidence: [c4_component, scenarios, functional-requirements, traceability]
+  expected_artifacts: [sdd_specification]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [open_questions]
+integration:
+  mappings: [sdd_specification]
+  structural_checks: [interface-contracts, verification-plan]
+  semantic_checks: [component-traceability, scenario-traceability]
+  human_approvals: []
+  acceptance: [implementation-ready-sdd]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

@@ -1,0 +1,22 @@
+# Controller-owned provenance for one independently generated six-output cohort.
+# Generate a current skeleton with:
+#   python tests/ai_sdlc/evals/score_skill.py --print-provenance-template
+# Write it as tests/ai_sdlc/evals/green/provenance.yaml only after all six raw
+# outputs exist. Do not edit the raw outputs to make their hashes match.
+# `controller_run_id`, `agent_id`, and `fresh_context` are controller
+# attestations with tamper-evident file/hash binding, not cryptographic proof
+# of external controller identity or agent identity.
+schema_version: 1
+cohort_id: <controller-assigned-cohort-id>
+skill_sha256: <sha256-of-exact-SKILL.md-bytes>
+skill_commit: <40-character-commit-id>
+records:
+  new-project:
+    input_sha256: <sha256-of-exact-scenario-input>
+    pressure_sha256: <sha256-of-exact-scenario-pressure>
+    output_sha256: <sha256-of-raw-new-project-md-bytes>
+    controller_run_id: <controller-run-id>
+    agent_id: <fresh-context-agent-id>
+    fresh_context: true
+    timestamp: <RFC3339-UTC-timestamp>
+    model: <optional-model-id>

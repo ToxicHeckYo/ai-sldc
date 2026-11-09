@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI SDLC Orchestrator"
+  short_description: "Govern AI-assisted software delivery"
+  default_prompt: "Use $ai-sdlc-orchestrator to recover canonical state and coordinate the next governed lifecycle action."

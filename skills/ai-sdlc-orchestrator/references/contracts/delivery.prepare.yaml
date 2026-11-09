@@ -1,0 +1,30 @@
+id: delivery.prepare
+version: 1
+applicable_when: [verified-implementation-is-available]
+dispatch:
+  required_inputs: [implementation_evidence, deployment_target, rollback_strategy, project_context]
+  optional_inputs: [requested_scope]
+  task_template: references/prompts/implementation-execute.md
+  readable_scope: [docs, staging]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, live_deployment, approval_inference]
+result:
+  required_sections: [preparation, package, work_item]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [implementation-evidence, package-identity, rollback-plan, traceability]
+  expected_artifacts: [deployment_package]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [unresolved]
+integration:
+  mappings: [deployment_package]
+  structural_checks: [package-manifest, version, rollback-plan, traceability]
+  semantic_checks: [implementation-verified, package-identity-bound, external-assurance]
+  human_approvals: []
+  acceptance: [external-asserted-report, automation-adapter-result, versioned-package-ready]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

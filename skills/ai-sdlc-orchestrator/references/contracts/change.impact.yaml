@@ -1,0 +1,26 @@
+id: change.impact
+version: 1
+dispatch:
+  required_inputs: [change_request, current_specification, domains]
+  optional_inputs: [source_register]
+  task_template: references/prompts/change-management.md
+  readable_scope: [docs, specifications/current]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, unapproved_apply, approval_inference]
+result:
+  required_sections: [impact, work_item]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [current-specification, traceability]
+  expected_artifacts: [requirements_analysis]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [requirements_analysis]
+  structural_checks: [schema, source-hashes, result-hashes]
+  semantic_checks: [six-domain-impact, requirement-targets]
+  human_approvals: []
+  acceptance: [validated-impact]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism: {allowed: never, partition_by: [], integration_capability: provider-result.integrate}
+missing_provider_policy: stop

@@ -1,0 +1,29 @@
+id: workflow.skill-selection
+version: 1
+dispatch:
+  required_inputs: [request]
+  optional_inputs: [available_capabilities]
+  task_template: references/prompts/workflow-skill-selection.md
+  readable_scope: [references/contracts, references/providers]
+  writable_scope: []
+  forbidden_actions: [network_install, canonical_state_write]
+result:
+  required_sections: [selection, rationale]
+  allowed_formats: [yaml, json]
+  required_evidence: [capability-contract]
+  expected_artifacts: [provider-resolution]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [provider-resolution]
+  structural_checks: [schema]
+  semantic_checks: [applicability]
+  human_approvals: []
+  acceptance: [deterministic-selection]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: fallback

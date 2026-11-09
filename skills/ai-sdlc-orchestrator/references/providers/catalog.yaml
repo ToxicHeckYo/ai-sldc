@@ -1,0 +1,761 @@
+schema_version: 1
+providers:
+  builtin-capability-resolver:
+    kind: builtin
+    capabilities: [capability.resolve]
+    source: builtin://capability-resolver
+    revision: "1"
+    integrity: sha256:0000000000000000000000000000000000000000000000000000000000000000
+    priority: 10
+    enabled: true
+    fallback: false
+  builtin-capability-resolver-fallback:
+    kind: builtin
+    capabilities: [capability.resolve]
+    source: builtin://capability-resolver-fallback
+    revision: "1"
+    integrity: sha256:1111111111111111111111111111111111111111111111111111111111111111
+    priority: 20
+    enabled: true
+    fallback: true
+  external-capability-resolver:
+    kind: external
+    capabilities: [capability.resolve]
+    source: external://capability-resolver
+    revision: "1"
+    integrity: sha256:8888888888888888888888888888888888888888888888888888888888888888
+    priority: 20
+    enabled: true
+    fallback: false
+    classification: rejected
+    evaluated_at: "2026-11-04"
+    source_files: [{path: unavailable, url: external://capability-resolver, sha256: unknown}]
+    license: unknown
+    license_evidence: "No public source or license was supplied for this host adapter."
+    audit_evidence: ["No public audit evidence; provenance is unavailable."]
+    compatibility: {agents: [host-runtime], mode: host-defined, notes: "Retained only as a legacy resolver slot."}
+    security_reasoning: "Rejected because the source, behavior, and trust boundary cannot be inspected."
+    supply_chain_reasoning: "Rejected because there is no immutable source identity or reproducible digest."
+    decision: "Do not select for new locks; preserve the legacy slot for compatibility."
+  superpowers-using-superpowers:
+    kind: external
+    capabilities: [workflow.skill-selection]
+    source: https://github.com/obra/superpowers
+    revision: "7.0.1"
+    integrity: sha256:2222222222222222222222222222222222222222222222222222222222222222
+    priority: 10
+    enabled: true
+    fallback: false
+    classification: rejected
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/using-superpowers/SKILL.md
+        url: https://github.com/obra/superpowers/blob/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/using-superpowers/SKILL.md
+        sha256: 82c5c8866ad7f5dd4440ce66bd7806ba48a2f13771beae5cf112e53f08fe36ba
+    license: MIT
+    license_evidence: https://github.com/obra/superpowers/blob/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/LICENSE
+    audit_evidence:
+      - "https://www.skills.sh/obra/superpowers/using-superpowers (observed 2026-11-04: Gen Agent Trust Hub Warn, Socket Pass, Snyk Pass)."
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: skill.md, notes: "Legacy tag lock; use the pinned v7.0.1 recommendation for new locks."}
+    security_reasoning: "The reviewed skill is prose, but the repository also ships hooks, shell scripts, and an npm package; installation must be sandboxed and limited to the selected SKILL.md."
+    supply_chain_reasoning: "The tag-based legacy identity is retained only for old locks; it is not a reproducible recommendation."
+    decision: "Rejected as a new selection because the existing lock identity is a release tag and synthetic digest; retained for backwards compatibility."
+  superpowers-brainstorming:
+    kind: external
+    capabilities: [discovery.brainstorming]
+    source: https://github.com/obra/superpowers
+    revision: "7.0.1"
+    integrity: sha256:3333333333333333333333333333333333333333333333333333333333333333
+    priority: 10
+    enabled: true
+    fallback: false
+    classification: rejected
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/brainstorming/SKILL.md
+        url: https://github.com/obra/superpowers/blob/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/brainstorming/SKILL.md
+        sha256: 61a7ef918652108c76a3fd01e02dd92d39996c6b46d4cb2819cbd03f6c45e46a
+    license: MIT
+    license_evidence: https://github.com/obra/superpowers/blob/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/LICENSE
+    audit_evidence:
+      - "https://www.skills.sh/obra/superpowers/brainstorming (audit result not independently visible on the page; treat as unknown)."
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: skill.md, notes: "Legacy tag lock; use the pinned v7.0.1 recommendation for new locks."}
+    security_reasoning: "The skill invokes a local brainstorming server workflow in the broader repository; do not enable repository hooks or scripts as part of this catalog recommendation."
+    supply_chain_reasoning: "The tag-based legacy identity and synthetic digest cannot reproduce the reviewed bytes."
+    decision: "Rejected as a new selection because the existing lock identity is not an immutable commit; retained for backwards compatibility."
+  requirements-analysis:
+    kind: external
+    capabilities: [requirements.discovery]
+    source: https://github.com/jwynia/agent-skills
+    revision: e02ec7e226a6e4f8419fd3b88a1d8e472d421b32
+    integrity: sha256:87a6688bf03f9175ff56c9dd9331250ef814cf5c098ce305c9966210d209e69a
+    priority: 10
+    enabled: true
+    fallback: false
+    classification: conditional
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/tech/development/architecture/requirements-analysis/SKILL.md
+        url: https://github.com/jwynia/agent-skills/blob/e02ec7e226a6e4f8419fd3b88a1d8e472d421b32/skills/tech/development/architecture/requirements-analysis/SKILL.md
+        sha256: 87a6688bf03f9175ff56c9dd9331250ef814cf5c098ce305c9966210d209e69a
+    license: unknown
+    license_evidence: "No repository LICENSE was present at the inspected commit; verify distribution rights before redistribution."
+    audit_evidence:
+      - "https://www.skills.sh/jwynia/agent-skills/requirements-analysis (observed 2026-11-04: Gen Agent Trust Hub Pass, Socket Pass, Snyk Pass)."
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: adapter, notes: "A checked-in adapter constrains writes to staging/requirements and keeps output subordinate to formal specification."}
+    security_reasoning: "Useful discovery prose; the adapter treats output as untrusted input, forbids control-file writes, and does not allow a PRD to substitute for formal requirements."
+    supply_chain_reasoning: "Exact commit and source digest are known, but the missing license blocks an unconditional preferred classification."
+    decision: "Use conditionally for discovery only after license confirmation; keep formalization and acceptance criteria builtin."
+  frontend-standard:
+    kind: external
+    capabilities: [frontend.delivery]
+    source: https://github.com/VSmirno/frontend-standard
+    revision: 9e5b44c6f3e33d3c0cd762f3dcb6aa15ce1a4968
+    integrity: sha256:cc17e83ba02fc8883ccdaca5486fd4dac44b28f42340cf3fce1ab3c81a36f3c8
+    priority: 10
+    enabled: true
+    fallback: false
+    classification: conditional
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/frontend-standard/SKILL.md
+        url: https://github.com/VSmirno/frontend-standard/blob/9e5b44c6f3e33d3c0cd762f3dcb6aa15ce1a4968/skills/frontend-standard/SKILL.md
+        sha256: cc17e83ba02fc8883ccdaca5486fd4dac44b28f42340cf3fce1ab3c81a36f3c8
+      - path: standard/frontend.md
+        url: https://github.com/VSmirno/frontend-standard/blob/9e5b44c6f3e33d3c0cd762f3dcb6aa15ce1a4968/standard/frontend.md
+        sha256: 0b0b89494d889c4cd91c178c4ebf2d0749bb497687bc8753a5711b5a9c9c6267
+      - path: standard/VERSION
+        url: https://github.com/VSmirno/frontend-standard/blob/9e5b44c6f3e33d3c0cd762f3dcb6aa15ce1a4968/standard/VERSION
+        sha256: 1575e1af4a95f12f70b4ee6a6adce8160953d93ea17dc2611b90883ccc3ad3b8
+    license: unknown
+    license_evidence: "No repository LICENSE was present at the inspected commit; verify distribution rights before redistribution."
+    audit_evidence: ["skills.sh audit status was not independently verifiable at the access date; treat as unknown."]
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: adapter, notes: "The adapter writes only staging/frontend and requires tests, build, accessibility, and security evidence."}
+    security_reasoning: "The adapter rejects lifecycle, project-control, push, merge, and deploy actions; the standard remains advisory until its license is confirmed."
+    supply_chain_reasoning: "The three source files are pinned and hashed, but missing license and audit evidence require a conditional gate."
+    decision: "Use conditionally for frontend delivery guidance after license confirmation; retain neutral delivery gates builtin."
+  c4-modeling:
+    kind: external
+    capabilities: [architecture.c4]
+    source: package://c4-modeling
+    revision: "1"
+    integrity: sha256:5555555555555555555555555555555555555555555555555555555555555555
+    priority: 10
+    enabled: true
+    fallback: false
+    classification: conditional
+    evaluated_at: "2026-11-04"
+    source_files: [{path: package metadata unavailable, url: package://c4-modeling, sha256: unknown}]
+    license: unknown
+    license_evidence: "The package source and license are not present in this neutral skill repository."
+    audit_evidence: ["No public package provenance or audit evidence was supplied for package://c4-modeling."]
+    compatibility: {agents: [host-runtime], mode: package, notes: "Existing external slot is preserved; the builtin architecture.c4 contract remains available as a fallback."}
+    security_reasoning: "C4 output is design data and must be treated as untrusted provider output; package behavior cannot be reviewed from this repository."
+    supply_chain_reasoning: "No immutable package revision or source digest can be independently verified; require host-level package attestation."
+    decision: "Use only when the host supplies an attested package and license; do not bundle or copy the package."
+  superpowers-using-superpowers-pinned:
+    kind: external
+    capabilities: [workflow.skill-selection]
+    source: https://github.com/obra/superpowers/tree/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/using-superpowers
+    revision: 2ce8aa15d05bd57213e6f746f953aafb7ded7a8b
+    integrity: sha256:82c5c8866ad7f5dd4440ce66bd7806ba48a2f13771beae5cf112e53f08fe36ba
+    priority: 20
+    enabled: false
+    fallback: false
+    classification: preferred
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/using-superpowers/SKILL.md
+        url: https://github.com/obra/superpowers/blob/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/using-superpowers/SKILL.md
+        sha256: 82c5c8866ad7f5dd4440ce66bd7806ba48a2f13771beae5cf112e53f08fe36ba
+    license: MIT
+    license_evidence: https://github.com/obra/superpowers/blob/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/LICENSE
+    audit_evidence:
+      - "Source review: inspected skills/using-superpowers/SKILL.md at commit 2ce8aa15d05bd57213e6f746f953aafb7ded7a8b; selected file is instructional and repository hooks are excluded."
+      - "https://www.skills.sh/obra/superpowers/using-superpowers (observed 2026-11-04: Gen Agent Trust Hub Warn, Socket Pass, Snyk Pass)."
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: catalog-only, notes: "Enable only after a host adapter has reviewed the selected file and repository hooks are excluded."}
+    security_reasoning: "The selected file is instructional, but the repository contains hooks and shell/npm tooling; host installation must allowlist the file and sandbox any execution."
+    supply_chain_reasoning: "Exact release commit, source path, Git blob, and content digest are recorded; no branch or floating tag is used."
+    decision: "Preferred replacement for the legacy tag alias when a host adapter is available."
+  superpowers-brainstorming-pinned:
+    kind: external
+    capabilities: [discovery.brainstorming]
+    source: https://github.com/obra/superpowers/tree/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/brainstorming
+    revision: 2ce8aa15d05bd57213e6f746f953aafb7ded7a8b
+    integrity: sha256:61a7ef918652108c76a3fd01e02dd92d39996c6b46d4cb2819cbd03f6c45e46a
+    priority: 20
+    enabled: false
+    fallback: false
+    classification: preferred
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/brainstorming/SKILL.md
+        url: https://github.com/obra/superpowers/blob/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/brainstorming/SKILL.md
+        sha256: 61a7ef918652108c76a3fd01e02dd92d39996c6b46d4cb2819cbd03f6c45e46a
+    license: MIT
+    license_evidence: https://github.com/obra/superpowers/blob/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/LICENSE
+    audit_evidence:
+      - "Source review: inspected skills/brainstorming/SKILL.md at commit 2ce8aa15d05bd57213e6f746f953aafb7ded7a8b; selected file is instructional and no server or repository hook is bundled."
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: catalog-only, notes: "Enable only after a host adapter has reviewed the selected file and excluded repository hooks/scripts."}
+    security_reasoning: "The brainstorming workflow may use a local server in the broader repository; no server or script is bundled by this neutral catalog entry."
+    supply_chain_reasoning: "Exact release commit, source path, Git blob, and content digest are recorded; no branch or floating tag is used."
+    decision: "Preferred brainstorming guidance when a host adapter is available; the neutral discovery contract remains authoritative."
+  create-prd:
+    kind: external
+    capabilities: [requirements.discovery]
+    source: https://github.com/phuryn/pm-skills
+    revision: 2a12295a7717569baa7be181b4cfebe3ca38a6bb
+    integrity: sha256:e3aa10a437ed7f748a957bd5d1eb06d8fa3f56dc728dcb93ce484387ecc3fa13
+    priority: 900
+    enabled: false
+    fallback: false
+    classification: alternative
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: pm-execution/skills/create-prd/SKILL.md
+        url: https://github.com/phuryn/pm-skills/blob/2a12295a7717569baa7be181b4cfebe3ca38a6bb/pm-execution/skills/create-prd/SKILL.md
+        sha256: e3aa10a437ed7f748a957bd5d1eb06d8fa3f56dc728dcb93ce484387ecc3fa13
+    license: MIT
+    license_evidence: https://github.com/phuryn/pm-skills/blob/2a12295a7717569baa7be181b4cfebe3ca38a6bb/LICENSE
+    audit_evidence:
+      - "https://www.skills.sh/phuryn/pm-skills/create-prd (observed 2026-11-04: 11.0K installs, 27.7K repository stars, Gen Agent Trust Hub Pass, Socket Pass, Snyk Warn)."
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: catalog-only, notes: "Markdown-only PRD workflow; no adapter or bundled copy is shipped."}
+    security_reasoning: "The skill requests user-provided evidence and marks unknowns as assumptions; generated PRD text remains untrusted and cannot replace formal SRS or acceptance criteria."
+    supply_chain_reasoning: "The exact main commit, source path, and content digest are recorded; the repository's broader plugin set is not installed."
+    decision: "Alternative to requirements discovery for product framing; use only before builtin formalization and never as a formal-specification provider."
+  anthropic-architecture:
+    kind: external
+    capabilities: [architecture.decision]
+    source: https://github.com/anthropics/knowledge-work-plugins
+    revision: d900840716eb262e1feb17c6f4406c9ce0e06bcf
+    integrity: sha256:de7db3170a3ae1a894c70ef6cb555fe15618ed9b9674d20895eda3d2a0a5f9a2
+    priority: 900
+    enabled: false
+    fallback: false
+    classification: conditional
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: engineering/skills/architecture/SKILL.md
+        url: https://github.com/anthropics/knowledge-work-plugins/blob/d900840716eb262e1feb17c6f4406c9ce0e06bcf/engineering/skills/architecture/SKILL.md
+        sha256: de7db3170a3ae1a894c70ef6cb555fe15618ed9b9674d20895eda3d2a0a5f9a2
+    license: Apache-2.0
+    license_evidence: https://github.com/anthropics/knowledge-work-plugins/blob/d900840716eb262e1feb17c6f4406c9ce0e06bcf/LICENSE
+    audit_evidence:
+      - "https://www.skills.sh/anthropics/knowledge-work-plugins/architecture (observed 2026-11-04: 6.9K installs, 34.7K repository stars, Gen Agent Trust Hub Pass, Socket Pass, Snyk Pass)."
+    compatibility: {agents: [Claude Code, Codex], mode: catalog-only, notes: "The source is an Anthropic knowledge-work plugin; connector and host assumptions require a provider adapter."}
+    security_reasoning: "The selected file is an ADR prompt and does not itself execute tools; the repository contains connectors and many plugins, so only the pinned file may be exposed."
+    supply_chain_reasoning: "Exact commit and source digest are recorded, but vendor-specific plugin coupling and repository breadth make this conditional rather than neutral-core preferred."
+    decision: "Conditional architecture-decision alternative when the host supports the Anthropic plugin format; builtin decision contracts remain authoritative."
+  wondelai-system-design:
+    kind: external
+    capabilities: [architecture.system-design]
+    source: https://github.com/wondelai/skills
+    revision: d8d5d75f83da9f16d8aad5bab5f5b341a4770a30
+    integrity: sha256:57548bbec281e73fed47ed8f2e16394ece68129342d04047f44c8c5b9ef64c38
+    priority: 900
+    enabled: false
+    fallback: false
+    classification: alternative
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: system-design/SKILL.md
+        url: https://github.com/wondelai/skills/blob/d8d5d75f83da9f16d8aad5bab5f5b341a4770a30/system-design/SKILL.md
+        sha256: 57548bbec281e73fed47ed8f2e16394ece68129342d04047f44c8c5b9ef64c38
+    license: MIT
+    license_evidence: https://github.com/wondelai/skills/blob/d8d5d75f83da9f16d8aad5bab5f5b341a4770a30/LICENSE
+    audit_evidence:
+      - "https://www.skills.sh/wondelai/skills/system-design (observed 2026-11-04: 6.4K installs, 2.6K repository stars, Gen Agent Trust Hub Pass, Socket Pass, Snyk Pass)."
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: catalog-only, notes: "Portable SKILL.md; references additional files that must be pinned separately if loaded."}
+    security_reasoning: "The source is design guidance with no required execution boundary; it nevertheless references external material and must not be allowed to mutate project state."
+    supply_chain_reasoning: "Exact commit and source digest are recorded; the repository includes scripts and many skills, so only the selected source file is eligible."
+    decision: "Alternative system-design framework for capacity, scaling, reliability, and trade-offs; use after requirements and before implementation."
+  microsoft-code-review:
+    kind: external
+    capabilities: [quality.code-review]
+    source: https://github.com/microsoft/vscode
+    revision: f92b8f3adcd9bc034e6b9ade05c093dd59b99c5f
+    integrity: sha256:7ee471b534871da8f38e1fdc7295dd70dd4dc29fa2ad90076dba798569160fb1
+    priority: 900
+    enabled: false
+    fallback: false
+    classification: alternative
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: .github/skills/code-review/SKILL.md
+        url: https://github.com/microsoft/vscode/blob/f92b8f3adcd9bc034e6b9ade05c093dd59b99c5f/.github/skills/code-review/SKILL.md
+        sha256: 7ee471b534871da8f38e1fdc7295dd70dd4dc29fa2ad90076dba798569160fb1
+    license: MIT
+    license_evidence: https://github.com/microsoft/vscode/blob/f92b8f3adcd9bc034e6b9ade05c093dd59b99c5f/LICENSE.txt
+    audit_evidence: ["skills.sh listing https://www.skills.sh/microsoft/vscode/code-review; current audit badge and install metric were not independently verifiable, so treat as unknown."]
+    compatibility: {agents: [GitHub Copilot, Codex], mode: catalog-only, notes: "Review guidance is portable but source is maintained inside the VS Code repository and assumes PR/diff context."}
+    security_reasoning: "The source instructs read-only review and actionable findings; neutral runtime must still bind review scope and prohibit provider writes."
+    supply_chain_reasoning: "Exact repository commit, source path, and digest are recorded; no VS Code build or extension dependency is installed."
+    decision: "Alternative code-review guidance; builtin review contract and approval semantics remain authoritative."
+  telemetry-foundations:
+    kind: external
+    capabilities: [operations.monitor]
+    source: https://github.com/microsoft/hve-core
+    revision: 55352bb8e9f0622ff40f5c6afa80363adaf6b07f
+    integrity: sha256:89008ec22d1b8c2cb261daa2c78ffe283f3688993de8837835ea2922d5faa214
+    priority: 900
+    enabled: false
+    fallback: false
+    classification: conditional
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: .github/skills/shared/telemetry-foundations/SKILL.md
+        url: https://github.com/microsoft/hve-core/blob/55352bb8e9f0622ff40f5c6afa80363adaf6b07f/.github/skills/shared/telemetry-foundations/SKILL.md
+        sha256: 89008ec22d1b8c2cb261daa2c78ffe283f3688993de8837835ea2922d5faa214
+    license: MIT
+    license_evidence: https://github.com/microsoft/hve-core/blob/55352bb8e9f0622ff40f5c6afa80363adaf6b07f/LICENSE
+    audit_evidence:
+      - "https://www.skills.sh/microsoft/hve-core/telemetry-foundations (observed 2026-11-04: 38 installs, 1.5K repository stars, Gen Agent Trust Hub Pass, Socket Pass, Snyk Pass)."
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: catalog-only, notes: "Vendor-neutral OpenTelemetry-aligned vocabulary; applies only when a project elects telemetry instrumentation."}
+    security_reasoning: "The skill explicitly hashes/drops PII and avoids vendor SDK selection; it is guidance, not a monitor or exporter, so no operational authority is granted."
+    supply_chain_reasoning: "Exact commit, source path, and digest are recorded; the broader hve-core repository is not installed."
+    decision: "Conditional telemetry vocabulary; builtin operations evidence and health gates remain unique to the orchestrator."
+  security-threat-modeling:
+    kind: external
+    capabilities: [change.security]
+    source: https://github.com/dtsong/agentic-council
+    revision: 36cf1d3338993408d5de9b86dcbd61432ca23db8
+    integrity: sha256:114b5fb59fa8fc3f6ed920470f9291346a775abc2e37898bee052d69b2ab7908
+    priority: 900
+    enabled: false
+    fallback: false
+    classification: alternative
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/skeptic-threat-model/SKILL.md
+        url: https://github.com/dtsong/agentic-council/blob/36cf1d3338993408d5de9b86dcbd61432ca23db8/skills/skeptic-threat-model/SKILL.md
+        sha256: 114b5fb59fa8fc3f6ed920470f9291346a775abc2e37898bee052d69b2ab7908
+    license: Apache-2.0
+    license_evidence: https://github.com/dtsong/agentic-council/blob/36cf1d3338993408d5de9b86dcbd61432ca23db8/LICENSE
+    audit_evidence:
+      - "https://www.skills.sh/dtsong/agentic-council/threat-model (observed 2026-11-04: 2 installs, Gen Agent Trust Hub Pass, Socket Pass, Snyk Pass)."
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: catalog-only, notes: "Design-time STRIDE analysis only; it must not execute exploits or mutate canonical project files."}
+    security_reasoning: "The source explicitly treats inputs as read-only and limits scope to design-time threat identification; residual risk and mitigations still require builtin security gates."
+    supply_chain_reasoning: "Exact commit, source path, and digest are recorded, but the very small install footprint means reputation evidence is limited."
+    decision: "Alternative threat-modeling guidance; require an explicit human/security review before treating findings as acceptance evidence."
+  api-design:
+    kind: external
+    capabilities: [architecture.system-design]
+    source: https://github.com/addyosmani/agent-skills
+    revision: 301b02b12bff98e4688e6984af6556802322bbde
+    integrity: sha256:cc5e2166c484b2c297e8253f56e7525e5031f81d66101ca4e760ef378ea6bad0
+    priority: 900
+    enabled: false
+    fallback: false
+    classification: alternative
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/api-and-interface-design/SKILL.md
+        url: https://github.com/addyosmani/agent-skills/blob/301b02b12bff98e4688e6984af6556802322bbde/skills/api-and-interface-design/SKILL.md
+        sha256: cc5e2166c484b2c297e8253f56e7525e5031f81d66101ca4e760ef378ea6bad0
+    license: MIT
+    license_evidence: https://github.com/addyosmani/agent-skills/blob/301b02b12bff98e4688e6984af6556802322bbde/LICENSE
+    audit_evidence: ["https://www.skills.sh/addyosmani/agent-skills/api-and-interface-design (trending listing observed 2026-11-04: 717 installs; audit status not independently verified)."]
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: catalog-only, notes: "Framework-agnostic API and module boundary guidance; no API adapter is bundled."}
+    security_reasoning: "The source emphasizes boundary validation, idempotency, and treating third-party responses as untrusted; it remains advisory and cannot approve an API change."
+    supply_chain_reasoning: "Exact commit, source path, and digest are recorded; repository hooks and scripts are not installed."
+    decision: "Alternative API-design guidance; builtin change/data and architecture contracts remain authoritative."
+  api-design-wso2:
+    kind: external
+    capabilities: [architecture.system-design]
+    source: https://github.com/wso2/agent-skills
+    revision: fb7af3319117dc0f77226fa9e26419ce68494753
+    integrity: sha256:50e76adc1f35cbe412b3ff18ebf3774930d66dd0496a0d3ea52d2650b740a8b8
+    priority: 990
+    enabled: false
+    fallback: false
+    classification: rejected
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: plugins/api-platform/skills/api-design/SKILL.md
+        url: https://github.com/wso2/agent-skills/blob/fb7af3319117dc0f77226fa9e26419ce68494753/plugins/api-platform/skills/api-design/SKILL.md
+        sha256: 50e76adc1f35cbe412b3ff18ebf3774930d66dd0496a0d3ea52d2650b740a8b8
+    license: Apache-2.0
+    license_evidence: https://github.com/wso2/agent-skills/blob/fb7af3319117dc0f77226fa9e26419ce68494753/LICENSE
+    audit_evidence: ["https://www.skills.sh/wso2/agent-skills/api-design (observed 2026-11-04: 77 installs, 6 repository stars; no independent audit badge verified)."]
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: catalog-only, notes: "The workflow is tied to WSO2 REST guidelines and WSO2 platform semantics."}
+    security_reasoning: "The source includes an OpenAPI security-readiness assessment, but vendor-specific guidance cannot be treated as neutral security evidence."
+    supply_chain_reasoning: "Although the commit and digest are pinned, the low reputation signal and vendor coupling do not justify a neutral-core recommendation."
+    decision: "Rejected for the neutral orchestrator; use only in a WSO2-specific project after separate review."
+  data-design:
+    kind: external
+    capabilities: [change.data]
+    source: https://github.com/supabase/agent-skills
+    revision: c9be0e931b7930f7d02126d04774d904c381e7d7
+    integrity: sha256:ad65e776f45e761bafc609d3f506c77c1032225aa65e0c4c02f241b8071e5855
+    priority: 900
+    enabled: false
+    fallback: false
+    classification: conditional
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/supabase-postgres-best-practices/SKILL.md
+        url: https://github.com/supabase/agent-skills/blob/c9be0e931b7930f7d02126d04774d904c381e7d7/skills/supabase-postgres-best-practices/SKILL.md
+        sha256: ad65e776f45e761bafc609d3f506c77c1032225aa65e0c4c02f241b8071e5855
+    license: MIT
+    license_evidence: https://github.com/supabase/agent-skills/blob/c9be0e931b7930f7d02126d04774d904c381e7d7/LICENSE
+    audit_evidence: ["https://www.skills.sh/supabase/agent-skills/supabase-postgres-best-practices (database topic listing observed 2026-11-04; exact audit status not independently verified)."]
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: catalog-only, notes: "PostgreSQL/Supabase-specific patterns; apply only when the project chooses that database stack."}
+    security_reasoning: "The source covers indexes, RLS, and query safety, but platform assumptions must not bypass neutral data-change approvals or migration evidence."
+    supply_chain_reasoning: "Exact commit, source path, and digest are recorded; no Supabase CLI or external service is installed by this catalog."
+    decision: "Conditional data-design reference for PostgreSQL/Supabase projects; keep neutral data contracts and migration gates builtin."
+  data-design-database-documentation:
+    kind: external
+    capabilities: [change.data]
+    source: https://github.com/a-tokyo/agent-skills
+    revision: 99652ee6a78759a5ef655388497a2b889ad6c602
+    integrity: sha256:382ee3acb529953582babe379206fcac24c74e0fa0a8782eeb4fda49033cbe4f
+    priority: 990
+    enabled: false
+    fallback: false
+    classification: rejected
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/database-documentation/SKILL.md
+        url: https://github.com/a-tokyo/agent-skills/blob/99652ee6a78759a5ef655388497a2b889ad6c602/skills/database-documentation/SKILL.md
+        sha256: 382ee3acb529953582babe379206fcac24c74e0fa0a8782eeb4fda49033cbe4f
+    license: MIT
+    license_evidence: https://github.com/a-tokyo/agent-skills/blob/99652ee6a78759a5ef655388497a2b889ad6c602/LICENSE
+    audit_evidence: ["https://www.skills.sh/a-tokyo/agent-skills/database-documentation (observed 2026-11-04: 472 installs, 17 repository stars, Gen Agent Trust Hub Pass, Socket Pass, Snyk Pass)."]
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: catalog-only, notes: "Requires live database access and may use docker/DB MCP; it documents schemas rather than designing neutral change contracts."}
+    security_reasoning: "The skill insists on read-only introspection and redacting secrets, but live DB access is a high-impact host capability outside this neutral package."
+    supply_chain_reasoning: "Exact commit and digest are recorded, but benchmark/CLI dependencies and live database access create unnecessary supply-chain and blast-radius risk for this role."
+    decision: "Rejected as a default data-design provider; consider only as a separately governed database-documentation tool."
+  deployment-delivery:
+    kind: external
+    capabilities: [delivery.prepare]
+    source: https://github.com/addyosmani/agent-skills
+    revision: 301b02b12bff98e4688e6984af6556802322bbde
+    integrity: sha256:5e0e55c059670a7838dc9d58dc20a3a645c0d43c974416490112af7de522df95
+    priority: 900
+    enabled: false
+    fallback: false
+    classification: alternative
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/ci-cd-and-automation/SKILL.md
+        url: https://github.com/addyosmani/agent-skills/blob/301b02b12bff98e4688e6984af6556802322bbde/skills/ci-cd-and-automation/SKILL.md
+        sha256: 5e0e55c059670a7838dc9d58dc20a3a645c0d43c974416490112af7de522df95
+    license: MIT
+    license_evidence: https://github.com/addyosmani/agent-skills/blob/301b02b12bff98e4688e6984af6556802322bbde/LICENSE
+    audit_evidence: ["https://www.skills.sh/addyosmani/agent-skills/ci-cd-and-automation (trending listing observed 2026-11-04: 676 installs; audit status not independently verified)."]
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: catalog-only, notes: "CI/CD prose covers staged rollouts and rollback but is not an execution adapter."}
+    security_reasoning: "The skill emphasizes secrets, audit, staging, and rollback; provider commands remain untrusted and cannot bypass coordinator release approvals."
+    supply_chain_reasoning: "Exact commit, source path, and digest are recorded; no CI runner, cloud token, or deployment command is invoked by the catalog."
+    decision: "Alternative delivery guidance; builtin preparation, health, acceptance, and production gates remain unique."
+  deployment-delivery-azure:
+    kind: external
+    capabilities: [delivery.production-deploy]
+    source: https://github.com/microsoft/azure-skills
+    revision: 33200af2901bce6da01ce37498aa2b68e0c43f7c
+    integrity: sha256:d44c25fde43a5ccfa4c16975ea75518e1d963e1c84f1da2545fb970ef79dd066
+    priority: 990
+    enabled: false
+    fallback: false
+    classification: conditional
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/azure-deploy/SKILL.md
+        url: https://github.com/microsoft/azure-skills/blob/33200af2901bce6da01ce37498aa2b68e0c43f7c/skills/azure-deploy/SKILL.md
+        sha256: d44c25fde43a5ccfa4c16975ea75518e1d963e1c84f1da2545fb970ef79dd066
+    license: MIT
+    license_evidence: https://github.com/microsoft/azure-skills/blob/33200af2901bce6da01ce37498aa2b68e0c43f7c/LICENSE
+    audit_evidence: ["https://www.skills.sh/microsoft/azure-skills/azure-deploy (Microsoft catalog listing observed 2026-11-04; exact audit result not independently verified)."]
+    compatibility: {agents: [GitHub Copilot, Claude Code, Codex], mode: catalog-only, notes: "Azure CLI/AZD and human confirmation assumptions; not cloud-neutral."}
+    security_reasoning: "The source requires explicit confirmation around deploys and stops on failure, but deployment commands and credentials require host policy and human release authority."
+    supply_chain_reasoning: "Exact commit, source path, and digest are recorded; the broader Azure plugin includes hooks/telemetry and must not be installed wholesale."
+    decision: "Conditional only for Azure-bound projects with separately governed credentials and release adapters."
+  operations-reliability:
+    kind: external
+    capabilities: [operations.monitor]
+    source: https://github.com/microsoft/azure-skills
+    revision: 33200af2901bce6da01ce37498aa2b68e0c43f7c
+    integrity: sha256:a70f0a799c8f3cf805ada741e82af31a149b57cb1e2388d7805036492cdceb71
+    priority: 990
+    enabled: false
+    fallback: false
+    classification: conditional
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/azure-reliability/SKILL.md
+        url: https://github.com/microsoft/azure-skills/blob/33200af2901bce6da01ce37498aa2b68e0c43f7c/skills/azure-reliability/SKILL.md
+        sha256: a70f0a799c8f3cf805ada741e82af31a149b57cb1e2388d7805036492cdceb71
+    license: MIT
+    license_evidence: https://github.com/microsoft/azure-skills/blob/33200af2901bce6da01ce37498aa2b68e0c43f7c/LICENSE
+    audit_evidence: ["https://www.skills.sh/microsoft/azure-skills/azure-reliability (leaderboard listing observed 2026-11-04: 342.7K installs; exact audit result not independently verified)."]
+    compatibility: {agents: [GitHub Copilot, Claude Code, Codex], mode: catalog-only, notes: "Reliability assessment is Azure-resource-specific and assumes Azure CLI/AZD/IaC context."}
+    security_reasoning: "The source requires evidence-bound health and deployment checks, but cloud reads/writes and credentials remain high-impact host actions."
+    supply_chain_reasoning: "Exact commit, source path, and digest are recorded; the broad repository contains hooks and scripts, so only the selected source file is eligible."
+    decision: "Conditional Azure operations reference; neutral operations monitoring, evidence, and next-change contracts stay builtin."
+  operations-observability-addy:
+    kind: external
+    capabilities: [operations.monitor]
+    source: https://github.com/addyosmani/agent-skills
+    revision: 301b02b12bff98e4688e6984af6556802322bbde
+    integrity: sha256:e7fcb0820306d46268de9594d676ad98e35040858926c412b7000faa52a61f87
+    priority: 990
+    enabled: false
+    fallback: false
+    classification: alternative
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/observability-and-instrumentation/SKILL.md
+        url: https://github.com/addyosmani/agent-skills/blob/301b02b12bff98e4688e6984af6556802322bbde/skills/observability-and-instrumentation/SKILL.md
+        sha256: e7fcb0820306d46268de9594d676ad98e35040858926c412b7000faa52a61f87
+    license: MIT
+    license_evidence: https://github.com/addyosmani/agent-skills/blob/301b02b12bff98e4688e6984af6556802322bbde/LICENSE
+    audit_evidence: ["https://www.skills.sh/addyosmani/agent-skills/observability-and-instrumentation (trending listing observed 2026-11-04: 668 installs; audit status not independently verified)."]
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: catalog-only, notes: "OpenTelemetry-oriented prose; SDK/exporter choices remain project-specific."}
+    security_reasoning: "The source explicitly forbids logging secrets/PII and recommends symptom alerts with runbooks; it cannot attest to a live monitor or incident state."
+    supply_chain_reasoning: "Exact commit, source path, and digest are recorded; no telemetry SDK or exporter is installed by this entry."
+    decision: "Alternative observability guidance; builtin operations evidence and health gates remain the acceptance boundary."
+  requirements-formalize:
+    kind: builtin
+    capabilities: [requirements.formalize]
+    source: builtin://requirements-formalize
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  requirements-scenarios:
+    kind: builtin
+    capabilities: [requirements.scenarios]
+    source: builtin://requirements-scenarios
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  architecture-c4:
+    kind: builtin
+    capabilities: [architecture.c4]
+    source: builtin://architecture-c4
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  architecture-decision:
+    kind: builtin
+    capabilities: [architecture.decision]
+    source: builtin://architecture-decision
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  architecture-system-design:
+    kind: builtin
+    capabilities: [architecture.system-design]
+    source: builtin://architecture-system-design
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  architecture-sdd:
+    kind: builtin
+    capabilities: [architecture.sdd]
+    source: builtin://architecture-sdd
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  architecture-baseline:
+    kind: builtin
+    capabilities: [architecture.baseline]
+    source: builtin://architecture-baseline
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  superpowers-writing-plans:
+    kind: external
+    capabilities: [planning.implementation]
+    source: https://github.com/obra/superpowers/tree/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/writing-plans
+    revision: 2ce8aa15d05bd57213e6f746f953aafb7ded7a8b
+    integrity: sha256:a6c67c1900064347c2a329990dd3c555657c51c3ec53b259a08aa01a2c26139a
+    priority: 10
+    enabled: true
+    fallback: false
+    classification: preferred
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/writing-plans/SKILL.md
+        url: https://github.com/obra/superpowers/blob/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/writing-plans/SKILL.md
+        sha256: a6c67c1900064347c2a329990dd3c555657c51c3ec53b259a08aa01a2c26139a
+    license: MIT
+    license_evidence: https://github.com/obra/superpowers/blob/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/LICENSE
+    audit_evidence:
+      - "Source review: inspected skills/writing-plans/SKILL.md at commit 2ce8aa15d05bd57213e6f746f953aafb7ded7a8b; selected file is instructional and adapter writes remain governed."
+      - "https://www.skills.sh/obra/superpowers/writing-plans (observed 2026-11-04: Gen Agent Trust Hub Warn, Socket Pass, Snyk Pass)."
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: adapter, notes: "Checked-in adapter maps the external plan into the neutral planning contract."}
+    security_reasoning: "The skill is instructional; the adapter does not grant filesystem or lifecycle authority and keeps plan output behind neutral contracts and approvals."
+    supply_chain_reasoning: "Source path, commit SHA, Git blob, and content digest are pinned; the repository license is explicit."
+    decision: "Preferred planning guidance; the neutral contract and human gates remain authoritative."
+  superpowers-test-driven-development:
+    kind: external
+    capabilities: [implementation.tdd]
+    source: https://github.com/obra/superpowers/tree/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/test-driven-development
+    revision: 2ce8aa15d05bd57213e6f746f953aafb7ded7a8b
+    integrity: sha256:64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d
+    priority: 10
+    enabled: true
+    fallback: false
+    classification: preferred
+    evaluated_at: "2026-11-04"
+    source_files:
+      - path: skills/test-driven-development/SKILL.md
+        url: https://github.com/obra/superpowers/blob/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/test-driven-development/SKILL.md
+        sha256: 64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d
+    license: MIT
+    license_evidence: https://github.com/obra/superpowers/blob/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/LICENSE
+    audit_evidence:
+      - "Source review: inspected skills/test-driven-development/SKILL.md at commit 2ce8aa15d05bd57213e6f746f953aafb7ded7a8b; selected file is instructional and adapter writes remain governed."
+      - "https://www.skills.sh/obra/superpowers/test-driven-development (observed 2026-11-04: Gen Agent Trust Hub Warn, Socket Pass, Snyk Pass)."
+    compatibility: {agents: [Claude Code, Codex, Cursor, Windsurf, Gemini, Cline], mode: adapter, notes: "Checked-in adapter requires evidence of RED before GREEN and keeps writes in the provider staging boundary."}
+    security_reasoning: "The provider is prose plus repository tooling; normalized results require concrete failing/passing test evidence and cannot write control files through the neutral runtime."
+    supply_chain_reasoning: "Source path, commit SHA, Git blob, and content digest are pinned; the repository license is explicit."
+    decision: "Preferred TDD guidance; builtin contract validation and runtime staging remain authoritative."
+  builtin-implementation-execute:
+    kind: builtin
+    capabilities: [implementation.execute]
+    source: builtin://builtin-implementation-execute
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  builtin-planning-implementation:
+    kind: builtin
+    capabilities: [planning.implementation]
+    source: builtin://planning-implementation
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  builtin-implementation-tdd:
+    kind: builtin
+    capabilities: [implementation.tdd]
+    source: builtin://implementation-tdd
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  builtin-quality-code-review:
+    kind: builtin
+    capabilities: [quality.code-review]
+    source: builtin://builtin-quality-code-review
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  builtin-quality-verify:
+    kind: builtin
+    capabilities: [quality.verify]
+    source: builtin://builtin-quality-verify
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  change-route-impact:
+    kind: builtin
+    capabilities: [change.impact]
+    source: builtin://change-route-impact
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  change-route-implementation:
+    kind: builtin
+    capabilities: [change.implementation]
+    source: builtin://change-route-implementation
+    revision: "1"
+    integrity: sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    priority: 100
+    enabled: true
+    fallback: false
+  change-route-deployment:
+    kind: builtin
+    capabilities: [change.route-deployment]
+    source: builtin://change-route-deployment
+    revision: "1"
+    integrity: sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+    priority: 100
+    enabled: true
+    fallback: false
+  builtin-delivery-prepare:
+    kind: builtin
+    capabilities: [delivery.prepare]
+    source: builtin://delivery.prepare
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  builtin-delivery-test-deploy:
+    kind: builtin
+    capabilities: [delivery.test-deploy]
+    source: builtin://delivery.test-deploy
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  builtin-delivery-health-check:
+    kind: builtin
+    capabilities: [delivery.health-check]
+    source: builtin://delivery.health-check
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  builtin-delivery-acceptance:
+    kind: builtin
+    capabilities: [delivery.acceptance]
+    source: builtin://delivery.acceptance
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  builtin-delivery-production-deploy:
+    kind: builtin
+    capabilities: [delivery.production-deploy]
+    source: builtin://delivery.production-deploy
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  builtin-operations-monitor:
+    kind: builtin
+    capabilities: [operations.monitor]
+    source: builtin://operations.monitor
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false
+  builtin-operations-next-change:
+    kind: builtin
+    capabilities: [operations.next-change]
+    source: builtin://operations.next-change
+    revision: "1"
+    integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    priority: 100
+    enabled: true
+    fallback: false

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Human approval record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["gate", "actor", "role", "fingerprint", "decision", "role_assurance"],
+  "properties": {
+    "gate": {"type": "string", "pattern": ".*\\S.*"},
+    "actor": {"type": "string", "pattern": ".*\\S.*"},
+    "role": {"type": "string", "pattern": ".*\\S.*"},
+    "fingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "decision": {"enum": ["approved", "rejected", "returned"]},
+    "role_assurance": {"const": "asserted"}
+  }
+}

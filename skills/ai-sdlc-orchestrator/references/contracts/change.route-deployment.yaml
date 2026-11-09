@@ -1,0 +1,26 @@
+id: change.route-deployment
+version: 1
+dispatch:
+  required_inputs: [change_request, approved_preview, implementation_evidence]
+  optional_inputs: [deployment_target]
+  task_template: references/prompts/change-management.md
+  readable_scope: [docs, specifications/current, specifications/changes]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, unapproved_apply, fabricated_deployment]
+result:
+  required_sections: [deployment, work_item]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [production-deployment, traceability]
+  expected_artifacts: [deployment_package]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [deployment_package]
+  structural_checks: [schema, preview-fingerprint, source-hashes, result-hashes]
+  semantic_checks: [production-environment, external-assurance, deployment-status]
+  human_approvals: []
+  acceptance: [external-deployment-evidence]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism: {allowed: never, partition_by: [], integration_capability: provider-result.integrate}
+missing_provider_policy: stop

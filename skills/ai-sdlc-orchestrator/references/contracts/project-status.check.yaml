@@ -1,0 +1,29 @@
+id: project-status.check
+version: 1
+dispatch:
+  required_inputs: [project_snapshot, status_document]
+  optional_inputs: []
+  task_template: references/prompts/project-status-check.md
+  readable_scope: [docs/project-control]
+  writable_scope: []
+  forbidden_actions: [canonical_state_write]
+result:
+  required_sections: [findings, status]
+  allowed_formats: [yaml, json]
+  required_evidence: [status-document]
+  expected_artifacts: [status-validation-report]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [status-validation-report]
+  structural_checks: [schema]
+  semantic_checks: [snapshot-consistency]
+  human_approvals: []
+  acceptance: [no-findings]
+  partial_result_policy: reject
+  retry_policy: same_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

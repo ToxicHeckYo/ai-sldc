@@ -1,0 +1,7 @@
+request: Discover and validate requirements for a records-retention feature.
+sources:
+  - id: SRC-001
+    title: Retention policy workshop
+    location: docs/product-definition/sources/retention-workshop.md
+    checksum: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+existing_artifacts: []

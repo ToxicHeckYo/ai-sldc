@@ -1,0 +1,22 @@
+schema_version: 1
+provider:
+  id: architecture-c4
+  kind: builtin
+  source: builtin://architecture-c4
+  revision: "1"
+  integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  evaluated_at: "2026-11-03"
+  source_files: [{path: references/providers/adapters/architecture-c4.yaml, url: https://example.invalid/ai-sdlc/baseline-route/architecture-c4.yaml, git_blob: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}]
+capability: {id: architecture.c4, contract_version: 1}
+raw_output_schema: references/providers/adapters/schemas/baseline-route-result.schema.json
+dispatch: {task_template: references/prompts/architecture-c4.md, readable_scope: [docs], writable_scope: [staging], governance: {forbidden_actions: [canonical_state_write], protected_paths: [docs/project-control, docs/artifact-register.yaml, docs/product-definition/sources/source-register.yaml, PROJECT_STATUS.md]}}
+result_mapping:
+  status: {path: outcome, values: {complete: completed, partial: partial, blocked: blocked, failure: failed}}
+  sections: {context: sections.context, containers: sections.containers, decisions: sections.decisions}
+  evidence:
+    requirements: {path: evidence.requirements, type: string}
+    traceability: {path: evidence.traceability, type: array, item_required_fields: [source, target, relation]}
+  files_path: files
+  produced_path: produced
+  unresolved_path: unresolved
+  forbidden_nonempty_paths: [lifecycle_changes, project_state_changes, control_file_changes]

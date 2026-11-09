@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "required": ["schema_version", "project_id", "lifecycle_mode", "current_stage", "focus_work_items", "next_actions", "updated_at", "updated_by"], "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": 1}, "project_id": {"type": "string", "minLength": 1},
+    "lifecycle_mode": {"enum": ["initial-development", "refinement-before-baseline", "post-baseline-change"]},
+    "current_stage": {"type": "string", "pattern": "^STAGE-[0-9]{2}$"}, "focus_work_items": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "active_change": {"type": ["string", "null"]}, "current_baseline": {"type": ["string", "null"]}, "last_approved_artifact": {"type": ["string", "null"]}, "deployment_package_identity": {"type": ["string", "null"], "pattern": "^sha256:[0-9a-f]{64}$"},
+    "next_actions": {"type": "array", "items": {"type": "object", "required": ["work_item", "action"], "additionalProperties": false, "properties": {"work_item": {"type": "string", "minLength": 1}, "action": {"type": "string", "minLength": 1}}}},
+    "updated_at": {"type": "string", "minLength": 1}, "updated_by": {"type": "string", "minLength": 1}
+  }
+}

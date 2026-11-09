@@ -1,0 +1,17 @@
+provider:
+  id: frontend-standard
+  revision: 9e5b44c6f3e33d3c0cd762f3dcb6aa15ce1a4968
+base_revision: 0123456789abcdef0123456789abcdef01234567
+result: complete
+delivery:
+  delivered: [Button primitive updated.]
+  gaps: [No known gaps.]
+  unverified: [No unverified areas.]
+artifacts: [frontend-delivery]
+unresolved: []
+evidence:
+  tests: {command: npm test, exit_code: 0, summary: passed, output_sha256: "sha256:1111111111111111111111111111111111111111111111111111111111111111"}
+  build: {command: npm run build, exit_code: 0, summary: built, output_sha256: "sha256:2222222222222222222222222222222222222222222222222222222222222222"}
+  accessibility: {method: keyboard, status: passed, summary: passed, output_sha256: "sha256:3333333333333333333333333333333333333333333333333333333333333333"}
+changes: {}
+lifecycle_changes: []

@@ -1,0 +1,8 @@
+work_item: FE-014
+acceptance_criteria:
+  - Button primitive renders its label and keyboard focus.
+project_context:
+  stack: React 19 and Vite
+  frontend_root: web
+requested_scope:
+  - web/src/components/Button.tsx

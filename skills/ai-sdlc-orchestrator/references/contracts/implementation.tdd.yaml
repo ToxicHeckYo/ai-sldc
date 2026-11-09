@@ -1,0 +1,29 @@
+id: implementation.tdd
+version: 1
+dispatch:
+  required_inputs: [work_item, acceptance_criteria]
+  optional_inputs: [existing_tests]
+  task_template: references/prompts/implementation-tdd.md
+  readable_scope: [src, tests, docs]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write]
+result:
+  required_sections: [red, green, verification]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [failing-test, passing-test]
+  expected_artifacts: [test-report]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [test-report, implementation-artifacts]
+  structural_checks: [scope]
+  semantic_checks: [acceptance-criteria]
+  human_approvals: []
+  acceptance: [tests-pass]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism:
+  allowed: conditional
+  partition_by: [work_item]
+  integration_capability: provider-result.integrate
+missing_provider_policy: fallback

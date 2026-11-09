@@ -1,0 +1,12 @@
+.worktrees/
+.superpowers/
+.ai-sdlc-standard-sync/
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+**/__pycache__/
+*.py[cod]

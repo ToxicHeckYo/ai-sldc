@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "additionalProperties": false,
+  "required": ["provider", "base_revision", "outcome", "sections", "evidence", "files", "produced", "unresolved", "lifecycle_changes", "project_state_changes", "control_file_changes"],
+  "properties": {
+    "provider": {"type": "object", "additionalProperties": false, "required": ["id", "revision"], "properties": {"id": {"const": "builtin-planning-implementation"}, "revision": {"const": "1"}}},
+    "base_revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"}, "outcome": {"enum": ["complete", "partial", "blocked", "failure"]},
+    "sections": {"type": "object", "additionalProperties": false, "required": ["tasks", "dependencies", "verification", "work_item"], "properties": {"work_item": {"type": "string", "minLength": 1}, "tasks": {"type": "string", "minLength": 1}, "dependencies": {"type": "string", "minLength": 1}, "verification": {"type": "string", "minLength": 1}}},
+    "evidence": {"type": "object", "additionalProperties": false, "required": ["design", "requirements", "traceability"], "properties": {"design": {"type": "string", "minLength": 1}, "requirements": {"type": "string", "minLength": 1}, "traceability": {"$ref": "#/$defs/trace"}}},
+    "files": {"type": "object", "additionalProperties": {"type": "string"}}, "produced": {"type": "array", "items": {"type": "string", "minLength": 1}}, "unresolved": {"type": "array", "items": {"type": "string"}},
+    "lifecycle_changes": {"type": "array", "maxItems": 0}, "project_state_changes": {"type": "array", "maxItems": 0}, "control_file_changes": {"type": "array", "maxItems": 0}
+  },
+  "$defs": {"trace": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["source", "target", "relation"], "properties": {"source": {"type": "string", "minLength": 1}, "target": {"type": "string", "minLength": 1}, "relation": {"const": "traces_to"}}}}}
+}

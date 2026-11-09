@@ -1,0 +1,29 @@
+id: planning.readiness
+version: 1
+dispatch:
+  required_inputs: [project_snapshot]
+  optional_inputs: [requested_capability]
+  task_template: references/prompts/planning-readiness.md
+  readable_scope: [docs/project-control, docs]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write]
+result:
+  required_sections: [readiness, blockers, next_actions]
+  allowed_formats: [yaml, json]
+  required_evidence: [criteria]
+  expected_artifacts: [readiness-report]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [readiness-report]
+  structural_checks: [schema]
+  semantic_checks: [criteria]
+  human_approvals: []
+  acceptance: [deterministic-readiness]
+  partial_result_policy: require_human_decision
+  retry_policy: same_provider
+parallelism:
+  allowed: conditional
+  partition_by: [work_item]
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

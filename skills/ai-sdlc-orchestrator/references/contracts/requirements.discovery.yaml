@@ -1,0 +1,29 @@
+id: requirements.discovery
+version: 1
+dispatch:
+  required_inputs: [request, sources]
+  optional_inputs: [existing_artifacts]
+  task_template: references/providers/templates/requirements-analysis.md
+  readable_scope: [docs/product-definition, docs]
+  writable_scope: [staging/requirements]
+  forbidden_actions: [canonical_state_write, formal_specification_substitution]
+result:
+  required_sections: [requirements, conflicts, constraints, assumptions, open_questions]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [source-register, traceability]
+  expected_artifacts: [requirements-analysis]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [open_questions]
+integration:
+  mappings: [requirements-analysis]
+  structural_checks: [required-sections]
+  semantic_checks: [source-traceability, discovery-is-input-to-formal-specification, assumptions-and-questions-surfaced]
+  human_approvals: []
+  acceptance: [traceable-requirements]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism:
+  allowed: conditional
+  partition_by: [source]
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

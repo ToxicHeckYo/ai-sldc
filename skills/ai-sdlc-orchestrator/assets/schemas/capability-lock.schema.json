@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "capabilities"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": 1},
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/lock_entry"}
+    }
+  },
+  "$defs": {
+    "lock_entry": {
+      "type": "object", "additionalProperties": false,
+      "required": ["contract_version", "provider", "source", "revision", "integrity", "status"],
+      "properties": {
+        "contract_version": {"type": "integer", "minimum": 1},
+        "provider": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "minLength": 1},
+        "integrity": {"type": "string", "pattern": "^sha256:[0-9a-fA-F]{64}$"},
+        "status": {"enum": ["enabled", "disabled"]}
+      }
+    }
+  }
+}

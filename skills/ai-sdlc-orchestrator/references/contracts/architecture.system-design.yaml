@@ -1,0 +1,29 @@
+id: architecture.system-design
+version: 1
+dispatch:
+  required_inputs: [c2, decision, scenarios]
+  optional_inputs: [existing_components]
+  task_template: references/prompts/architecture-system-design.md
+  readable_scope: [docs]
+  writable_scope: [staging/architecture]
+  forbidden_actions: [canonical_state_write, baseline_approval_inference]
+result:
+  required_sections: [components, responsibilities, interactions]
+  allowed_formats: [markdown, mermaid, yaml]
+  required_evidence: [c4_container, adr, scenarios, traceability]
+  expected_artifacts: [c4_component]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [open_questions]
+integration:
+  mappings: [c4_component]
+  structural_checks: [component-ids, interaction-targets]
+  semantic_checks: [scenario-coverage, decision-consistency]
+  human_approvals: []
+  acceptance: [traceable-component-design]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

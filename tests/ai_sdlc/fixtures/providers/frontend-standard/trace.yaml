@@ -1,0 +1,24 @@
+schema_version: 1
+invocation_mode: recorded-fixture
+recorded_at: "2026-11-03"
+limitation: "live provider invocation unavailable: no provider runtime/API is installed"
+provider:
+  id: frontend-standard
+  source: https://github.com/VSmirno/frontend-standard
+  revision: 9e5b44c6f3e33d3c0cd762f3dcb6aa15ce1a4968
+input_fixture: tests/ai_sdlc/fixtures/providers/frontend-standard/input.yaml
+input_sha256: c1a84089e1ffc51a531a1a07dbb569940ee35ac3236741a078a4f1a20afaba53
+expected_raw_output_fixture: tests/ai_sdlc/fixtures/providers/frontend-standard/raw-complete.yaml
+expected_raw_output_sha256: bf6306e6f09ad82dc15844721c665a86daaacdb319c9cf623f995f293b049968
+normalization:
+  command:
+    - python
+    - skills/ai-sdlc-orchestrator/scripts/normalize_provider_fixture.py
+    - --adapter
+    - frontend-standard
+    - --raw
+    - tests/ai_sdlc/fixtures/providers/frontend-standard/raw-complete.yaml
+    - --base-revision
+    - 0123456789abcdef0123456789abcdef01234567
+  expected_result_fixture: tests/ai_sdlc/fixtures/providers/frontend-standard/normalized-complete.json
+  expected_result_sha256: 57e5bc065b92948cd11f102d9e47c46b6bf99904c3ac7c09b6fce6bd029ab45d

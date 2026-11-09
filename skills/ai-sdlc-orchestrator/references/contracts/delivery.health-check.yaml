@@ -1,0 +1,30 @@
+id: delivery.health-check
+version: 1
+applicable_when: [test-deployment-is-recorded]
+dispatch:
+  required_inputs: [test_deployment, package_identity, smoke_checks, health_checks, project_context]
+  optional_inputs: [test_scope]
+  task_template: references/prompts/quality-verify.md
+  readable_scope: [docs, staging]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, production_deployment, approval_inference]
+result:
+  required_sections: [health_check, smoke, work_item]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [package-identity, smoke-test, health-check, traceability]
+  expected_artifacts: [test_report]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [unresolved]
+integration:
+  mappings: [test_report]
+  structural_checks: [package-identity, smoke-results, health-results, traceability]
+  semantic_checks: [same-package-as-test-deployment, smoke-pass, health-pass, external-assurance]
+  human_approvals: []
+  acceptance: [external-asserted-report, automation-adapter-result, test-smoke-and-health]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

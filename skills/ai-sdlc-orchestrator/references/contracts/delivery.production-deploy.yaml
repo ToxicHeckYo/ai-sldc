@@ -1,0 +1,32 @@
+id: delivery.production-deploy
+version: 1
+applicable_when: [accepted-test-results-and-release-authority]
+dispatch:
+  required_inputs: [deployment_package, package_identity, acceptance_report, release_authority, production_target, rollback_strategy]
+  optional_inputs: [release_window]
+  task_template: references/prompts/change-management.md
+  readable_scope: [docs, staging]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, approval_inference, fabricated_deployment]
+result:
+  required_sections: [production_deployment, release, work_item]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [package-identity, production-deployment, production-smoke, production-health, release-authority, rollback-plan, traceability]
+  expected_artifacts: [release_record]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [unresolved]
+integration:
+  mappings: [release_record]
+  structural_checks: [package-identity, production-target, rollback-plan, release-authority, traceability]
+  semantic_checks: [same-package-as-accepted-tests, production-deployment, production-smoke-pass, production-health-pass, external-assurance]
+  human_approvals: [release-approval]
+  human_approval_roles:
+    release-approval: release-owner
+  acceptance: [external-asserted-report, automation-adapter-result, production-release-authority]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

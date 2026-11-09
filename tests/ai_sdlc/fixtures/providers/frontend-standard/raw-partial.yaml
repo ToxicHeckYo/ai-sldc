@@ -1,0 +1,39 @@
+provider:
+  id: frontend-standard
+  revision: 9e5b44c6f3e33d3c0cd762f3dcb6aa15ce1a4968
+base_revision: 0123456789abcdef0123456789abcdef01234567
+result: partial
+delivery:
+  delivered:
+    - Button primitive uses shared theme tokens.
+  gaps:
+    - Browser focus-return verification remains blocked.
+  unverified:
+    - Dialog focus return because a browser runtime was unavailable.
+artifacts: [frontend-delivery]
+unresolved:
+  - Run browser focus-return verification.
+evidence:
+  tests:
+    command: npm test -- Button
+    exit_code: 0
+    summary: 3 tests passed
+    output_sha256: sha256:7c5f1008e9e26c0bf62af50c130786af038baa6905587acd6d5babad5638c113
+  build:
+    command: npm run build
+    exit_code: 0
+    summary: production assets built
+    output_sha256: sha256:b6b03d9a58fc85d6de72876fe0b8f3aa071e0d069079afc3b1ffbcc558d8c0d5
+  accessibility:
+    method: static accessible-name review
+    status: partial
+    summary: browser focus-return verification unavailable
+    output_sha256: sha256:eb2bcd6598ac392e4ccade81aea88e54abb33232b54355d673059912faab671a
+  security:
+    method: dependency and client-secret review
+    status: passed
+    summary: no new dependency or client secret introduced
+    output_sha256: sha256:dcb0ae3b1a114223912b486a74f3f61e91fcd96b9f7cac11a462fea2dc7de393
+changes:
+  staging/frontend/src/Button.tsx: "export function Button() { return <button>Save</button>; }\n"
+lifecycle_changes: []

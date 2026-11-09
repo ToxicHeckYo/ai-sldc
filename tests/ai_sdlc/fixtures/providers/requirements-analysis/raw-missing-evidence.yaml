@@ -1,0 +1,14 @@
+provider:
+  id: requirements-analysis
+  revision: e02ec7e226a6e4f8419fd3b88a1d8e472d421b32
+base_revision: 0123456789abcdef0123456789abcdef01234567
+outcome: complete
+analysis:
+  requirements: [{id: BR-001, statement: A requirement without trace evidence.}]
+  conflicts: [No conflict found.]
+  constraints: {confirmed: [], preferences: []}
+  assumptions: [The source is accurate.]
+  open_questions: ["Who approves this?"]
+artifacts: [requirements-analysis]
+evidence: {}
+files: {}

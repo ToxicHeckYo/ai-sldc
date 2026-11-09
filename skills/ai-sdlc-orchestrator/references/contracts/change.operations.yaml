@@ -1,0 +1,27 @@
+id: change.operations
+version: 1
+dispatch:
+  required_inputs: [change_request, current_operations]
+  optional_inputs: [impact_analysis, deployment_evidence]
+  task_template: references/prompts/change-management.md
+  readable_scope: [docs, specifications/current]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, unapproved_apply, archive_before_verification]
+result:
+  required_sections: [change_request, impact, implementation, deployment, verification]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [current-specification, implementation-evidence, production-deployment]
+  expected_artifacts: [operations-record, archive-record]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [open_questions]
+integration:
+  mappings: [change-operations]
+  structural_checks: [schema, preview-fingerprint, resulting-hashes]
+  semantic_checks: [verification, external-deployment-assurance, immutable-archive]
+  human_approvals: [specification-change]
+  human_approval_roles: {specification-change: product-owner}
+  acceptance: [verified-application, resumable-trace, immutable-archive]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism: {allowed: never, partition_by: [], integration_capability: provider-result.integrate}
+missing_provider_policy: stop

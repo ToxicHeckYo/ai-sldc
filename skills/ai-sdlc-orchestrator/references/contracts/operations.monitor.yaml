@@ -1,0 +1,30 @@
+id: operations.monitor
+version: 1
+applicable_when: [production-release-is-recorded]
+dispatch:
+  required_inputs: [release_record, production_smoke, production_health, monitoring_scope, project_context]
+  optional_inputs: [incident_policy]
+  task_template: references/prompts/change-management.md
+  readable_scope: [docs, staging]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, release_authority_inference, unapproved_change]
+result:
+  required_sections: [monitoring, incident_readiness, work_item]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [production-deployment, production-smoke, production-health, monitoring, incident-record, feedback-record, traceability]
+  expected_artifacts: [operations_document]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [unresolved]
+integration:
+  mappings: [operations_document]
+  structural_checks: [release-record, monitoring-scope, smoke-and-health, incident-record, feedback-record, traceability]
+  semantic_checks: [release-is-immutable, production-smoke-and-health, operational-ownership, incident-record, feedback-record, external-assurance]
+  human_approvals: []
+  acceptance: [external-asserted-report, automation-adapter-result, monitoring-record]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism:
+  allowed: conditional
+  partition_by: [monitoring_scope]
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

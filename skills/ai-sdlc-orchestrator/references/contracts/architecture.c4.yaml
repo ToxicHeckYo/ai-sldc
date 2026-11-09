@@ -1,0 +1,29 @@
+id: architecture.c4
+version: 1
+dispatch:
+  required_inputs: [scope, requirements]
+  optional_inputs: [existing_architecture]
+  task_template: references/prompts/architecture-c4.md
+  readable_scope: [docs]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write]
+result:
+  required_sections: [context, containers, decisions]
+  allowed_formats: [markdown, mermaid]
+  required_evidence: [requirements]
+  expected_artifacts: [c4_context, c4_container]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [open_questions]
+integration:
+  mappings: [c4_context, c4_container]
+  structural_checks: [diagram-syntax]
+  semantic_checks: [scope-consistency]
+  human_approvals: [architecture-approval]
+  acceptance: [traceable-architecture]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

@@ -1,0 +1,51 @@
+schema_version: 1
+provider:
+  id: requirements-analysis
+  kind: external
+  source: https://github.com/jwynia/agent-skills
+  discovery_url: https://www.skills.sh/jwynia/agent-skills/requirements-analysis
+  revision: e02ec7e226a6e4f8419fd3b88a1d8e472d421b32
+  integrity: sha256:87a6688bf03f9175ff56c9dd9331250ef814cf5c098ce305c9966210d209e69a
+  evaluated_at: "2026-11-03"
+  source_files:
+    - path: skills/tech/development/architecture/requirements-analysis/SKILL.md
+      url: https://github.com/jwynia/agent-skills/blob/e02ec7e226a6e4f8419fd3b88a1d8e472d421b32/skills/tech/development/architecture/requirements-analysis/SKILL.md
+      git_blob: e2cf4374cac29ab6f3d7317e64ab8f7e3440df31
+      sha256: 87a6688bf03f9175ff56c9dd9331250ef814cf5c098ce305c9966210d209e69a
+capability:
+  id: requirements.discovery
+  contract_version: 1
+raw_output_schema: references/providers/adapters/schemas/requirements-analysis-result.schema.json
+dispatch:
+  task_template: references/providers/templates/requirements-analysis.md
+  readable_scope: [docs/product-definition, docs]
+  writable_scope: [staging/requirements]
+  governance:
+    output_role: input_to_formal_specification
+    cannot_substitute: [formal_srs, formal_acceptance_criteria]
+    surface: [assumptions, open_questions]
+    protected_paths: [docs/project-control, docs/artifact-register.yaml, docs/product-definition/sources/source-register.yaml, PROJECT_STATUS.md]
+    forbidden_actions: [canonical_state_write, formal_specification_substitution]
+result_mapping:
+  status:
+    path: outcome
+    values: {complete: completed, partial: partial, blocked: blocked, failure: failed}
+  sections:
+    requirements: analysis.requirements
+    conflicts: analysis.conflicts
+    constraints: analysis.constraints
+    assumptions: analysis.assumptions
+    open_questions: analysis.open_questions
+  evidence:
+    source-register:
+      path: evidence.sources
+      type: array
+      item_required_fields: [source_id, checksum]
+    traceability:
+      path: evidence.traceability
+      type: array
+      item_required_fields: [source, target, relation]
+  files_path: files
+  produced_path: artifacts
+  unresolved_path: analysis.open_questions
+  forbidden_nonempty_paths: [lifecycle_changes, project_state_changes, control_file_changes]

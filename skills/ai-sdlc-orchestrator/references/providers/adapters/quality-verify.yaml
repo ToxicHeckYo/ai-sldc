@@ -1,0 +1,25 @@
+schema_version: 1
+provider:
+  id: builtin-quality-verify
+  kind: builtin
+  source: builtin://builtin-quality-verify
+  revision: "1"
+  integrity: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  evaluated_at: "2026-11-04"
+  source_files: [{path: references/providers/adapters/quality-verify.yaml, url: https://example.invalid/ai-sdlc/implementation/quality-verify.yaml, git_blob: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}]
+capability: {id: quality.verify, contract_version: 1}
+raw_output_schema: references/providers/adapters/schemas/quality-verify-result.schema.json
+dispatch: {task_template: references/prompts/quality-verify.md, readable_scope: [src, tests, docs, staging], writable_scope: [staging], governance: {forbidden_actions: [canonical_state_write], protected_paths: [docs/project-control, docs/artifact-register.yaml, docs/product-definition/sources/source-register.yaml, PROJECT_STATUS.md]}}
+result_mapping:
+  status: {path: outcome, values: {complete: completed, partial: partial, blocked: blocked, failure: failed}}
+  sections: {verification: sections.verification, result: sections.result, evidence: sections.evidence, work_item: sections.work_item}
+  evidence:
+    tests: {path: evidence.tests, type: string}
+    review: {path: evidence.review, type: string}
+    security: {path: evidence.security, type: string}
+    build: {path: evidence.build, type: string}
+    traceability: {path: evidence.traceability, type: array, item_required_fields: [source, target, relation]}
+  files_path: files
+  produced_path: produced
+  unresolved_path: unresolved
+  forbidden_nonempty_paths: [lifecycle_changes, project_state_changes, control_file_changes]

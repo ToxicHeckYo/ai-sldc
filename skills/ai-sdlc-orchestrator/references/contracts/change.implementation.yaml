@@ -1,0 +1,26 @@
+id: change.implementation
+version: 1
+dispatch:
+  required_inputs: [change_request, approved_preview, impact_analysis]
+  optional_inputs: [test_evidence]
+  task_template: references/prompts/change-management.md
+  readable_scope: [docs, specifications/current, specifications/changes]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, unapproved_apply, fabricated_evidence]
+result:
+  required_sections: [implementation, work_item]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [implementation, traceability]
+  expected_artifacts: [test_report]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [test_report]
+  structural_checks: [schema, source-hashes, result-hashes]
+  semantic_checks: [tests, review, verification]
+  human_approvals: []
+  acceptance: [verified-implementation]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism: {allowed: never, partition_by: [], integration_capability: provider-result.integrate}
+missing_provider_policy: stop

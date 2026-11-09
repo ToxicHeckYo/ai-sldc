@@ -1,0 +1,53 @@
+schema_version: 1
+cohort_id: compatibility-guidance-final-20261108T091632Z
+skill_sha256: 813504cf335aa6a360ddb89b7107432c32c8c354aec660eb518c9efb02a11a0d
+skill_commit: 19d2cf8e67bfc850209fcbe8ec90ff987f2b5e3a
+records:
+  new-project:
+    input_sha256: 298bb95bcb3f12ce29c86e7b9b5620271ab5964c07fe8318d7e4dbd5546cad26
+    pressure_sha256: bce783955d3440c76b8b8e84cfba33893e523e92b76f8d6a0f1b86b361e62edb
+    output_sha256: 3d1460492bbcce930809da451287d65e042faf22461aa9f46a22e2ebeb123765
+    controller_run_id: native-compatibility-guidance
+    agent_id: /root/compat_eval2_a
+    fresh_context: true
+    timestamp: "2026-11-08T09:16:32.094683Z"
+  resume:
+    input_sha256: 92d74b861ed6019529a80092f9985f4fa203877775af41b9498e7c4171d9a01c
+    pressure_sha256: 95b323891f6697b995ff132de73c55c2541159546d912e2a6c86b18b4f011365
+    output_sha256: f9b0b1e7db66126e7e6004f7e8714871563ecae1422e4d7e556018743bf03fc4
+    controller_run_id: native-compatibility-guidance
+    agent_id: /root/compat_eval2_a
+    fresh_context: true
+    timestamp: "2026-11-08T09:16:32.094683Z"
+  post-baseline-change:
+    input_sha256: aa3b6251132254ca1d05bef528d4fcf9f809fd79215d1e6287af02109832a1c5
+    pressure_sha256: 44a953be663f818e387c7f5bf11bc2c4ff58f1242ed1c800b29bde7590c7f183
+    output_sha256: 4a5eceea3401c3adba194428af6e286dc97e4a0d7ccfb748ee9fb81048c478f9
+    controller_run_id: native-compatibility-guidance
+    agent_id: /root/compat_eval2_b
+    fresh_context: true
+    timestamp: "2026-11-08T09:16:32.094683Z"
+  parallel-conflict:
+    input_sha256: ceedf99b730d92d2c17f3efd9dabd73a7de926e9dc4adaa42cfcc3e525f6b321
+    pressure_sha256: 427abb0597ee3a89e48215fd1a3d1433bc00484c9ff06c89db4429620965eb8a
+    output_sha256: c37f79ad3b5cdccfdf358fd2f9ef27bdbb475d4cc4ff93b4491eb404863eecd4
+    controller_run_id: native-compatibility-guidance
+    agent_id: /root/compat_eval2_b
+    fresh_context: true
+    timestamp: "2026-11-08T09:16:32.094683Z"
+  missing-provider:
+    input_sha256: 1880132d7f4d8ae3cfc4a1e4be622dd0ec02d4719a6779090c5d1330aa8511d8
+    pressure_sha256: e564a34dc70fe6fd4531c3e2844bf7ad0de6c98def07e799b84a02c1f142adfc
+    output_sha256: 6e8536c84e2764f2c2c3204f14d23c3b4b859957c6c7e19243ff74c3348d3d4b
+    controller_run_id: native-compatibility-guidance
+    agent_id: /root/compat_eval2_c
+    fresh_context: true
+    timestamp: "2026-11-08T09:16:32.094683Z"
+  stale-approval:
+    input_sha256: 60dd4cc4747992bbd30ec64bb95af8d6c8e332d099d30081ef479e13c65dc768
+    pressure_sha256: 85215f5e81c792c185b46f320ac6419beb21dd14d6aee63daacfef8d68b133fb
+    output_sha256: 5f473f4a901378e606b3ccefb439f65517608e97c4ee8e68e2bcdfbea946afff
+    controller_run_id: native-compatibility-guidance
+    agent_id: /root/compat_eval2_c
+    fresh_context: true
+    timestamp: "2026-11-08T09:16:32.094683Z"

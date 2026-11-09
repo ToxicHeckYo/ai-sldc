@@ -1,0 +1,29 @@
+id: implementation.execute
+version: 1
+dispatch:
+  required_inputs: [integration_plan, branch_results]
+  optional_inputs: [constraints]
+  task_template: references/prompts/implementation-execute.md
+  readable_scope: [src, tests, docs, staging]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write]
+result:
+  required_sections: [execution, integration, verification]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [execution, integration]
+  expected_artifacts: [test-report]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [test-report]
+  structural_checks: [all-branches, fan-in]
+  semantic_checks: [acceptance-criteria]
+  human_approvals: []
+  acceptance: [integrated-tests-pass]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

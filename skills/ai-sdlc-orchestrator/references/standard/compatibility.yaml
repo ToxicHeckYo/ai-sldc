@@ -1,0 +1,10 @@
+schema_version: 1
+skill:
+  name: ai-sdlc-orchestrator
+  version: 0.1.0
+implements:
+  standard_version: 1.0.0
+  standard_sha256: c2973549d4178ed76eb9275dbc0d6bcd62ff3827360d0c658393cb5b27532314
+verification:
+  status: declared
+  declared_at: '2026-11-08'

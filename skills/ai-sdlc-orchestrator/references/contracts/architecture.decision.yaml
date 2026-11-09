@@ -1,0 +1,29 @@
+id: architecture.decision
+version: 1
+dispatch:
+  required_inputs: [context, alternatives, requirements]
+  optional_inputs: [existing_decisions]
+  task_template: references/prompts/architecture-decision.md
+  readable_scope: [docs]
+  writable_scope: [staging/architecture]
+  forbidden_actions: [canonical_state_write, human_approval_inference]
+result:
+  required_sections: [context, decision, alternatives, consequences]
+  allowed_formats: [markdown, yaml]
+  required_evidence: [requirements, c4_context, c4_container, traceability]
+  expected_artifacts: [adr]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [open_questions]
+integration:
+  mappings: [adr]
+  structural_checks: [adr-sections]
+  semantic_checks: [requirements-traceability, alternatives-recorded]
+  human_approvals: [architecture-approval]
+  acceptance: [reviewable-architecture-decision]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

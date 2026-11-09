@@ -1,0 +1,29 @@
+id: requirements.formalize
+version: 1
+dispatch:
+  required_inputs: [analysis, source]
+  optional_inputs: [existing_requirements]
+  task_template: references/prompts/requirements-formalize.md
+  readable_scope: [docs/product-definition, docs]
+  writable_scope: [staging/requirements]
+  forbidden_actions: [canonical_state_write, approval_inference]
+result:
+  required_sections: [requirements, acceptance_criteria, constraints]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [requirements-analysis, source-register, traceability]
+  expected_artifacts: [functional_requirements, acceptance_criteria]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [open_questions]
+integration:
+  mappings: [functional_requirements, acceptance_criteria]
+  structural_checks: [required-sections, unique-requirement-ids]
+  semantic_checks: [analysis-traceability, scenario-ready]
+  human_approvals: []
+  acceptance: [traceable-formal-requirements]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

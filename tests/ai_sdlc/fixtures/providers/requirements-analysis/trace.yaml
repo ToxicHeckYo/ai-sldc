@@ -1,0 +1,24 @@
+schema_version: 1
+invocation_mode: recorded-fixture
+recorded_at: "2026-11-03"
+limitation: "live provider invocation unavailable: no provider runtime/API is installed"
+provider:
+  id: requirements-analysis
+  source: https://github.com/jwynia/agent-skills
+  revision: e02ec7e226a6e4f8419fd3b88a1d8e472d421b32
+input_fixture: tests/ai_sdlc/fixtures/providers/requirements-analysis/input.yaml
+input_sha256: 3eb35ccb0b968c29c3763800f4302a456308a2212f80f6007a5b6598252cedf5
+expected_raw_output_fixture: tests/ai_sdlc/fixtures/providers/requirements-analysis/raw-complete.yaml
+expected_raw_output_sha256: 6ec50978dc687a88b37ac7b5537bd18b8f2d88126eab27c9cdcc4159e74eecc3
+normalization:
+  command:
+    - python
+    - skills/ai-sdlc-orchestrator/scripts/normalize_provider_fixture.py
+    - --adapter
+    - requirements-analysis
+    - --raw
+    - tests/ai_sdlc/fixtures/providers/requirements-analysis/raw-complete.yaml
+    - --base-revision
+    - 0123456789abcdef0123456789abcdef01234567
+  expected_result_fixture: tests/ai_sdlc/fixtures/providers/requirements-analysis/normalized-complete.json
+  expected_result_sha256: b72a92dafca844fffd12fa4e4068e74650b97f6141d73ad715a288e6ab5efdcd

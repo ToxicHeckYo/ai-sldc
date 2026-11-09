@@ -1,0 +1,79 @@
+schema_version: 1
+provider:
+  id: frontend-standard
+  kind: external
+  source: https://github.com/VSmirno/frontend-standard
+  revision: 9e5b44c6f3e33d3c0cd762f3dcb6aa15ce1a4968
+  integrity: sha256:cc17e83ba02fc8883ccdaca5486fd4dac44b28f42340cf3fce1ab3c81a36f3c8
+  evaluated_at: "2026-11-03"
+  source_files:
+    - path: skills/frontend-standard/SKILL.md
+      url: https://github.com/VSmirno/frontend-standard/blob/9e5b44c6f3e33d3c0cd762f3dcb6aa15ce1a4968/skills/frontend-standard/SKILL.md
+      git_blob: de7d7223793213f642d75b8cff5097aa69092c8c
+      sha256: cc17e83ba02fc8883ccdaca5486fd4dac44b28f42340cf3fce1ab3c81a36f3c8
+    - path: standard/frontend.md
+      url: https://github.com/VSmirno/frontend-standard/blob/9e5b44c6f3e33d3c0cd762f3dcb6aa15ce1a4968/standard/frontend.md
+      git_blob: d9fc14ac3ed9ce7320955d2271fc76d668dd5c19
+      sha256: 0b0b89494d889c4cd91c178c4ebf2d0749bb497687bc8753a5711b5a9c9c6267
+    - path: standard/VERSION
+      url: https://github.com/VSmirno/frontend-standard/blob/9e5b44c6f3e33d3c0cd762f3dcb6aa15ce1a4968/standard/VERSION
+      git_blob: 9084fa2f716a7117829f3f32a5f4cef400e02903
+      sha256: 1575e1af4a95f12f70b4ee6a6adce8160953d93ea17dc2611b90883ccc3ad3b8
+capability:
+  id: frontend.delivery
+  contract_version: 1
+raw_output_schema: references/providers/adapters/schemas/frontend-standard-result.schema.json
+dispatch:
+  task_template: references/providers/templates/frontend-standard.md
+  readable_scope: [src, tests, docs, package.json, lockfiles]
+  writable_scope: [staging/frontend]
+  governance:
+    standard_version: "1.1.0"
+    protected_paths: [docs/project-control, docs/artifact-register.yaml, docs/product-definition/sources/source-register.yaml, PROJECT_STATUS.md]
+    forbidden_actions: [lifecycle_transition, project_state_write, control_file_write, push, merge, deploy]
+result_mapping:
+  status:
+    path: result
+    values: {complete: completed, partial: partial, blocked: blocked, failure: failed}
+  sections:
+    delivered: delivery.delivered
+    gaps: delivery.gaps
+    unverified: delivery.unverified
+  evidence:
+    tests:
+      path: evidence.tests
+      type: object
+      required_fields: [command, exit_code, summary, output_sha256]
+      sha256_fields: {output_sha256: summary}
+    build:
+      path: evidence.build
+      type: object
+      required_fields: [command, exit_code, summary, output_sha256]
+      sha256_fields: {output_sha256: summary}
+    accessibility:
+      path: evidence.accessibility
+      type: object
+      required_fields: [method, status, summary, output_sha256]
+      sha256_fields: {output_sha256: summary}
+    security:
+      path: evidence.security
+      type: object
+      required_fields: [method, status, summary, output_sha256]
+      sha256_fields: {output_sha256: summary}
+  completed_evidence:
+    tests:
+      path: evidence.tests.exit_code
+      accepted: [0]
+    build:
+      path: evidence.build.exit_code
+      accepted: [0]
+    accessibility:
+      path: evidence.accessibility.status
+      accepted: [passed, not_applicable]
+    security:
+      path: evidence.security.status
+      accepted: [passed, not_applicable]
+  files_path: changes
+  produced_path: artifacts
+  unresolved_path: unresolved
+  forbidden_nonempty_paths: [lifecycle_changes, project_state_changes, control_file_changes]

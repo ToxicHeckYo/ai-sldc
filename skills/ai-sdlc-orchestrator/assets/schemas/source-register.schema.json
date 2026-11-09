@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "required": ["sources"], "additionalProperties": false,
+  "properties": {"sources": {"type": "array", "items": {"type": "object", "required": ["id", "kind", "title", "origin", "received_at", "version", "location", "status"], "additionalProperties": false, "properties": {"id": {"type": "string", "minLength": 1}, "kind": {"enum": ["contract", "technical_specification", "business_document", "meeting_protocol", "message", "data_export", "regulation", "external_reference"]}, "title": {"type": "string", "minLength": 1}, "origin": {"type": "string", "minLength": 1}, "received_at": {"type": "string", "minLength": 1}, "version": {"type": "string", "minLength": 1}, "location": {"type": "string", "minLength": 1}, "scope": {"type": "string"}, "checksum": {"type": "string"}, "status": {"enum": ["registered", "accepted", "superseded", "rejected", "unavailable"]}}}}}
+}

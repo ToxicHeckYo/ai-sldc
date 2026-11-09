@@ -1,0 +1,29 @@
+id: requirements.scenarios
+version: 1
+dispatch:
+  required_inputs: [formal_requirements, source]
+  optional_inputs: [domain_model]
+  task_template: references/prompts/requirements-scenarios.md
+  readable_scope: [docs/product-definition, docs]
+  writable_scope: [staging/requirements]
+  forbidden_actions: [canonical_state_write, architecture_selection]
+result:
+  required_sections: [scenarios, actors, acceptance_coverage]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [functional-requirements, source-register, traceability]
+  expected_artifacts: [business_scenario_catalog]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [open_questions]
+integration:
+  mappings: [business_scenario_catalog]
+  structural_checks: [scenario-ids, acceptance-coverage]
+  semantic_checks: [requirements-traceability]
+  human_approvals: []
+  acceptance: [traceable-scenarios]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

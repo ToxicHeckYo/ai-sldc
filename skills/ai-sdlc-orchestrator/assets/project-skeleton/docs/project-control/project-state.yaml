@@ -1,0 +1,14 @@
+schema_version: 1
+project_id: PROJECT-001
+lifecycle_mode: initial-development
+current_stage: STAGE-01
+focus_work_items:
+  - TASK-001
+next_actions:
+  - work_item: TASK-001
+    action: Зарегистрировать и проанализировать исходные материалы
+updated_at: '1970-01-01'
+updated_by: orchestrator
+active_change: null
+current_baseline: null
+last_approved_artifact: null

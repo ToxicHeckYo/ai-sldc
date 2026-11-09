@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["nodes"],
+  "anyOf": [{"required": ["edges"]}, {"required": ["links"]}],
+  "$defs": {
+    "artifactKind": {"enum": ["product_vision", "product_goals", "system_scope", "requirements_analysis", "domain_model", "roles_and_processes", "entity_lifecycles", "gaps_and_conflicts", "assumptions", "open_questions", "business_scenario", "business_scenario_catalog", "business_requirements", "roles_and_access_matrix", "functional_requirements", "non_functional_requirements", "constraints", "acceptance_criteria", "domain_glossary", "technical_glossary", "technical_specification_manifest", "technical_specification_release", "c4_context", "c4_container", "c4_component", "c4_dynamic", "arc42_section", "adr", "architecture_baseline", "sdd_specification", "test_plan", "test_report", "deployment_package", "release_record", "operations_document"]},
+    "sourceKind": {"enum": ["contract", "technical_specification", "business_document", "meeting_protocol", "message", "data_export", "regulation", "external_reference"]}
+  },
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "category", "kind"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "category": {"enum": ["source", "artifact"]},
+          "kind": {"type": "string", "minLength": 1},
+          "status": {"type": ["string", "null"]},
+          "path": {"type": ["string", "null"]}
+        },
+        "allOf": [
+          {"if": {"properties": {"category": {"const": "source"}}}, "then": {"properties": {"kind": {"$ref": "#/$defs/sourceKind"}}}},
+          {"if": {"properties": {"category": {"const": "artifact"}}}, "then": {"properties": {"kind": {"$ref": "#/$defs/artifactKind"}}}}
+        ]
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "target", "relation"],
+        "properties": {
+          "source": {"type": "string", "minLength": 1},
+          "target": {"type": "string", "minLength": 1},
+          "relation": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "target", "relation"],
+        "properties": {
+          "source": {"type": "string", "minLength": 1},
+          "target": {"type": "string", "minLength": 1},
+          "relation": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+id: architecture.baseline
+version: 1
+dispatch:
+  required_inputs: [requirements, architecture, sdd, traceability]
+  optional_inputs: [baseline_id]
+  task_template: references/prompts/baseline-validation.md
+  readable_scope: [docs]
+  writable_scope: [staging/baseline]
+  forbidden_actions: [canonical_state_write, approval_inference]
+result:
+  required_sections: [baseline, findings]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [artifact-register, source-register, traceability]
+  expected_artifacts: [architecture_baseline]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [architecture_baseline]
+  structural_checks: [references, baseline-manifest]
+  semantic_checks: [complete-trace-chain, no-unresolved-findings]
+  human_approvals: [baseline-approval]
+  human_approval_roles:
+    baseline-approval: product-owner
+  acceptance: [approved-baseline]
+  partial_result_policy: require_human_decision
+  retry_policy: same_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

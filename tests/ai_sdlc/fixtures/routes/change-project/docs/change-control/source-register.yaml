@@ -1,0 +1,9 @@
+sources:
+  - id: SRC-CHG-017
+    kind: business_document
+    title: Governed post-baseline policy update
+    origin: route-fixture
+    received_at: '2026-11-04'
+    version: '1'
+    location: specifications/changes/active/CHG-017/change.md
+    status: registered

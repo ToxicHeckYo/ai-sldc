@@ -1,0 +1,29 @@
+id: planning.parallel-scheduling
+version: 1
+dispatch:
+  required_inputs: [work_items]
+  optional_inputs: [capacity]
+  task_template: references/prompts/planning-parallel-scheduling.md
+  readable_scope: [docs/project-control]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write]
+result:
+  required_sections: [batches, conflicts, integration_work]
+  allowed_formats: [yaml, json]
+  required_evidence: [scope-analysis]
+  expected_artifacts: [execution-batch]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [execution-batch]
+  structural_checks: [dag, scope-conflicts]
+  semantic_checks: [dependency-order]
+  human_approvals: []
+  acceptance: [safe-batch]
+  partial_result_policy: reject
+  retry_policy: same_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

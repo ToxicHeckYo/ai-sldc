@@ -1,0 +1,29 @@
+id: lifecycle.state-management
+version: 1
+dispatch:
+  required_inputs: [project_snapshot]
+  optional_inputs: []
+  task_template: references/prompts/lifecycle-state-management.md
+  readable_scope: [docs/project-control]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write]
+result:
+  required_sections: [state-transition, validation]
+  allowed_formats: [yaml, json]
+  required_evidence: [transition-report]
+  expected_artifacts: [project-state]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [project-state]
+  structural_checks: [schema]
+  semantic_checks: [lifecycle-policy]
+  human_approvals: []
+  acceptance: [valid-transition]
+  partial_result_policy: reject
+  retry_policy: same_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

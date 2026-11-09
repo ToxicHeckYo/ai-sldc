@@ -1,0 +1,29 @@
+id: discovery.brainstorming
+version: 1
+dispatch:
+  required_inputs: [request]
+  optional_inputs: [constraints]
+  task_template: references/prompts/discovery-brainstorming.md
+  readable_scope: [docs]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write]
+result:
+  required_sections: [options, questions, assumptions]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [request-context]
+  expected_artifacts: [discovery-notes]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [questions]
+integration:
+  mappings: [discovery-notes]
+  structural_checks: [required-sections]
+  semantic_checks: [assumptions]
+  human_approvals: []
+  acceptance: [explicit-uncertainty]
+  partial_result_policy: require_human_decision
+  retry_policy: same_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: skip_if_not_applicable

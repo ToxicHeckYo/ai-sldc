@@ -1,0 +1,23 @@
+schema_version: 1
+provider:
+  id: superpowers-test-driven-development
+  kind: external
+  source: https://github.com/obra/superpowers/tree/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/test-driven-development
+  revision: 2ce8aa15d05bd57213e6f746f953aafb7ded7a8b
+  integrity: sha256:64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d
+  evaluated_at: "2026-11-04"
+  source_files: [{path: skills/test-driven-development/SKILL.md, url: https://raw.githubusercontent.com/obra/superpowers/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/test-driven-development/SKILL.md, git_blob: 46838cc9e893c06259e3bdad0fc2425b36242f15, sha256: 64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d}]
+capability: {id: implementation.tdd, contract_version: 1}
+raw_output_schema: references/providers/adapters/schemas/superpowers-test-driven-development-result.schema.json
+dispatch: {task_template: references/prompts/implementation-tdd.md, readable_scope: [src, tests, docs], writable_scope: [staging], governance: {forbidden_actions: [canonical_state_write], protected_paths: [docs/project-control, docs/artifact-register.yaml, docs/product-definition/sources/source-register.yaml, PROJECT_STATUS.md]}}
+result_mapping:
+  status: {path: outcome, values: {complete: completed, partial: partial, blocked: blocked, failure: failed}}
+  sections: {red: sections.red, green: sections.green, verification: sections.verification, work_item: sections.work_item}
+  evidence:
+    failing-test: {path: evidence.failing-test, type: string}
+    passing-test: {path: evidence.passing-test, type: string}
+    traceability: {path: evidence.traceability, type: array, item_required_fields: [source, target, relation]}
+  files_path: files
+  produced_path: produced
+  unresolved_path: unresolved
+  forbidden_nonempty_paths: [lifecycle_changes, project_state_changes, control_file_changes]

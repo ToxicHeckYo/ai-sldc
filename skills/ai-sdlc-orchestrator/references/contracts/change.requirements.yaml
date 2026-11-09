@@ -1,0 +1,27 @@
+id: change.requirements
+version: 1
+dispatch:
+  required_inputs: [change_request, current_requirements]
+  optional_inputs: [impact_analysis]
+  task_template: references/prompts/change-management.md
+  readable_scope: [docs, specifications/current]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, unapproved_apply, approval_inference]
+result:
+  required_sections: [change_request, impact, delta, implementation, deployment]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [current-specification, implementation-evidence, production-deployment]
+  expected_artifacts: [change-delta, archive-record]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [open_questions]
+integration:
+  mappings: [change-requirements]
+  structural_checks: [schema, fingerprint, source-hashes, result-hashes]
+  semantic_checks: [requirement-targets, implementation-evidence, deployment-assurance-external-asserted]
+  human_approvals: [specification-change]
+  human_approval_roles: {specification-change: product-owner}
+  acceptance: [approved-preview, verified-application, immutable-archive]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism: {allowed: never, partition_by: [], integration_capability: provider-result.integrate}
+missing_provider_policy: stop

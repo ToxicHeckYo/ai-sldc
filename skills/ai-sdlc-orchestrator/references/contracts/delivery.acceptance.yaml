@@ -1,0 +1,32 @@
+id: delivery.acceptance
+version: 1
+applicable_when: [test-smoke-and-health-have-passed]
+dispatch:
+  required_inputs: [test_deployment, health_report, business_tests, system_tests, project_context]
+  optional_inputs: [acceptance_scope]
+  task_template: references/prompts/quality-verify.md
+  readable_scope: [docs, staging]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, production_deployment, approval_inference]
+result:
+  required_sections: [acceptance, business_tests, human_acceptance, work_item]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [package-identity, functional-tests, integration-tests, system-tests, regression-tests, security-tests, performance-tests, business-scenario, acceptance-report, traceability]
+  expected_artifacts: [test_report]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [unresolved]
+integration:
+  mappings: [test_report]
+  structural_checks: [package-identity, functional-tests, integration-tests, system-tests, regression-tests, security-tests, performance-tests, business-scenario, acceptance-report, traceability]
+  semantic_checks: [same-package-as-test-deployment, test-smoke-and-health, functional-pass, functional-tests-pass, integration-pass, integration-tests-pass, system-pass, system-tests-pass, regression-pass, regression-tests-pass, security-pass, security-tests-pass, performance-pass, performance-tests-pass, business-scenario-pass, acceptance-result, external-assurance]
+  human_approvals: [acceptance-approval]
+  human_approval_roles:
+    acceptance-approval: product-owner
+  acceptance: [external-asserted-report, automation-adapter-result, human-acceptance]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

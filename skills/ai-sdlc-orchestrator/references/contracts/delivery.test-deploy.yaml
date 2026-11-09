@@ -1,0 +1,30 @@
+id: delivery.test-deploy
+version: 1
+applicable_when: [versioned-package-and-rollback-plan-are-ready]
+dispatch:
+  required_inputs: [deployment_package, package_identity, test_environment, rollback_strategy, project_context]
+  optional_inputs: [test_scope]
+  task_template: references/prompts/change-management.md
+  readable_scope: [docs, staging]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, production_deployment, approval_inference]
+result:
+  required_sections: [test_deployment, rollback, work_item]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [package-identity, test-deployment, rollback-plan, traceability]
+  expected_artifacts: [deployment_package]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [unresolved]
+integration:
+  mappings: [deployment_package]
+  structural_checks: [package-identity, test-target, rollback-plan, traceability]
+  semantic_checks: [same-package-as-preparation, test-environment, rollback-ready, external-assurance]
+  human_approvals: []
+  acceptance: [external-asserted-report, automation-adapter-result, test-deployment-record]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

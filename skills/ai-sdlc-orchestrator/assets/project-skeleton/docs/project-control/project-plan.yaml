@@ -1,0 +1,104 @@
+schema_version: 1
+project_id: PROJECT-001
+planning_mode: rolling_wave
+stages:
+  - id: STAGE-01
+    title: Анализ и определение продукта
+    status: active
+    depends_on: []
+    entry_criteria:
+      - id: EC-01
+        text: Исходные материалы зарегистрированы
+        status: verified
+    exit_criteria:
+      - id: XC-01
+        text: Анализ продукта проверен
+        status: pending
+    work_items:
+      - id: TASK-001
+        title: Зарегистрировать и проанализировать исходные материалы
+        status: ready
+        executor: coordinator
+        depends_on: []
+        produces: []
+        scope:
+          artifacts: []
+          paths:
+            - docs/product-definition/
+  - id: STAGE-02
+    title: Определение границ системы
+    status: planning
+    depends_on:
+      - STAGE-01
+    work_items:
+      - id: TASK-002
+        title: Определить границы системы
+        status: planned
+        executor: coordinator
+        depends_on:
+          - TASK-001
+        produces: []
+        scope:
+          artifacts: []
+          paths:
+            - docs/system-context/
+  - id: STAGE-03
+    title: Проектирование и проверка C2
+    status: not_started
+    depends_on:
+      - STAGE-02
+  - id: STAGE-04
+    title: Уточнение ТЗ
+    status: not_started
+    depends_on:
+      - STAGE-03
+  - id: STAGE-05
+    title: Архитектурная проработка
+    status: not_started
+    depends_on:
+      - STAGE-04
+  - id: STAGE-06
+    title: Сценарная детализация архитектуры и SDD
+    status: not_started
+    depends_on:
+      - STAGE-05
+  - id: STAGE-07
+    title: Фиксация исходного baseline
+    status: not_started
+    depends_on:
+      - STAGE-06
+  - id: STAGE-08
+    title: Детальное планирование реализации
+    status: not_started
+    depends_on:
+      - STAGE-07
+  - id: STAGE-09
+    title: Реализация с помощью ИИ
+    status: not_started
+    depends_on:
+      - STAGE-08
+  - id: STAGE-10
+    title: Подготовка к развертыванию
+    status: not_started
+    depends_on:
+      - STAGE-09
+  - id: STAGE-11
+    title: Развертывание на тестовом контуре
+    status: not_started
+    depends_on:
+      - STAGE-10
+  - id: STAGE-12
+    title: Тестирование и приёмка
+    status: not_started
+    depends_on:
+      - STAGE-11
+  - id: STAGE-13
+    title: Развертывание в промышленном контуре
+    status: not_started
+    depends_on:
+      - STAGE-12
+  - id: STAGE-14
+    title: Эксплуатация и развитие
+    status: not_started
+    depends_on:
+      - STAGE-13

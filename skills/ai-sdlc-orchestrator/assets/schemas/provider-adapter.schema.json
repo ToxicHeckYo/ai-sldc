@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "provider", "capability", "raw_output_schema", "dispatch", "result_mapping"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": 1},
+    "provider": {"$ref": "#/$defs/provider"},
+    "capability": {"$ref": "#/$defs/capability"},
+    "raw_output_schema": {"type": "string", "minLength": 1},
+    "dispatch": {"$ref": "#/$defs/dispatch"},
+    "result_mapping": {"$ref": "#/$defs/result_mapping"}
+  },
+  "$defs": {
+    "strings": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "source", "revision", "integrity", "evaluated_at", "source_files"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["builtin", "external"]},
+        "source": {"type": "string", "format": "uri"},
+        "revision": {"type": "string"},
+        "integrity": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "evaluated_at": {"type": "string", "format": "date"},
+        "discovery_url": {"type": "string", "format": "uri"},
+        "source_files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "url", "git_blob", "sha256"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "url": {"type": "string", "format": "uri"},
+              "git_blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+              "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+            }
+          }
+        }
+      },
+      "allOf": [
+        {"if": {"properties": {"kind": {"const": "external"}}}, "then": {"properties": {"revision": {"pattern": "^[0-9a-f]{40}$"}}}},
+        {"if": {"properties": {"kind": {"const": "builtin"}}}, "then": {"properties": {"revision": {"pattern": "^[1-9][0-9]*$"}}}}
+      ]
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "contract_version"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "contract_version": {"type": "integer", "minimum": 1}
+      }
+    },
+    "dispatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task_template", "readable_scope", "writable_scope", "governance"],
+      "properties": {
+        "task_template": {"type": "string", "minLength": 1},
+        "readable_scope": {"$ref": "#/$defs/strings"},
+        "writable_scope": {"$ref": "#/$defs/strings"},
+        "governance": {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {"type": "string"},
+              {"$ref": "#/$defs/strings"}
+            ]
+          }
+        }
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "type"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "type": {"enum": ["object", "array", "string", "integer"]},
+        "required_fields": {"$ref": "#/$defs/strings"},
+        "item_required_fields": {"$ref": "#/$defs/strings"},
+        "sha256_fields": {
+          "type": "object",
+          "additionalProperties": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "result_mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "sections", "evidence", "files_path", "produced_path", "unresolved_path", "forbidden_nonempty_paths"],
+      "properties": {
+        "status": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "values"],
+          "properties": {
+            "path": {"type": "string", "minLength": 1},
+            "values": {
+              "type": "object",
+              "additionalProperties": {"enum": ["completed", "partial", "blocked", "failed"]}
+            }
+          }
+        },
+        "sections": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}},
+        "evidence": {"type": "object", "additionalProperties": {"$ref": "#/$defs/mapping"}},
+        "completed_evidence": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "accepted"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "accepted": {
+                "type": "array",
+                "minItems": 1,
+                "items": {"type": ["string", "integer", "boolean"]}
+              }
+            }
+          }
+        },
+        "files_path": {"type": "string", "minLength": 1},
+        "produced_path": {"type": "string", "minLength": 1},
+        "unresolved_path": {"type": "string", "minLength": 1},
+        "forbidden_nonempty_paths": {"$ref": "#/$defs/strings"}
+      }
+    }
+  }
+}

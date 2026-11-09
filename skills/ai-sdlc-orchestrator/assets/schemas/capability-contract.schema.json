@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["id", "version", "dispatch", "result", "integration", "parallelism", "missing_provider_policy"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "version": {"type": "integer", "minimum": 1},
+    "dispatch": {"$ref": "#/$defs/dispatch"},
+    "result": {"$ref": "#/$defs/result"},
+    "integration": {"$ref": "#/$defs/integration"},
+    "parallelism": {"$ref": "#/$defs/parallelism"},
+    "missing_provider_policy": {"enum": ["stop", "fallback", "skip_if_not_applicable", "require_risk_decision"]},
+    "applicable_when": {"$ref": "#/$defs/strings"}
+  },
+  "$defs": {
+    "strings": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "dispatch": {
+      "type": "object", "additionalProperties": false,
+      "required": ["required_inputs", "optional_inputs", "task_template", "readable_scope", "writable_scope", "forbidden_actions"],
+      "properties": {
+        "required_inputs": {"$ref": "#/$defs/strings"},
+        "optional_inputs": {"$ref": "#/$defs/strings"},
+        "task_template": {"type": "string", "minLength": 1},
+        "context": {"$ref": "#/$defs/strings"},
+        "tools": {"$ref": "#/$defs/strings"},
+        "readable_scope": {"$ref": "#/$defs/strings"},
+        "writable_scope": {"$ref": "#/$defs/strings"},
+        "forbidden_actions": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "result": {
+      "type": "object", "additionalProperties": false,
+      "required": ["required_sections", "required_evidence", "statuses"],
+      "properties": {
+        "required_sections": {"$ref": "#/$defs/strings"},
+        "allowed_formats": {"$ref": "#/$defs/strings"},
+        "required_evidence": {"$ref": "#/$defs/strings"},
+        "expected_artifacts": {"$ref": "#/$defs/strings"},
+        "statuses": {"type": "array", "minItems": 1, "items": {"enum": ["completed", "partial", "blocked", "failed"]}},
+        "open_questions": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "integration": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mappings", "structural_checks", "semantic_checks", "human_approvals"],
+      "properties": {
+        "mappings": {"$ref": "#/$defs/strings"},
+        "structural_checks": {"$ref": "#/$defs/strings"},
+        "semantic_checks": {"$ref": "#/$defs/strings"},
+        "human_approvals": {"$ref": "#/$defs/strings"},
+        "human_approval_roles": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}},
+        "acceptance": {"$ref": "#/$defs/strings"},
+        "partial_result_policy": {"enum": ["accept_with_evidence", "reject", "require_human_decision"]},
+        "retry_policy": {"enum": ["same_provider", "replace_provider", "none"]}
+      }
+    },
+    "parallelism": {
+      "type": "object", "additionalProperties": false,
+      "required": ["allowed", "partition_by", "integration_capability"],
+      "properties": {
+        "allowed": {"enum": ["never", "conditional", "always"]},
+        "partition_by": {"$ref": "#/$defs/strings"},
+        "integration_capability": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

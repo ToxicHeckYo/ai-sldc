@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "project_id", "stages"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "planning_mode": {"enum": ["rolling_wave"]},
+    "stages": {"type": "array", "minItems": 14, "maxItems": 14, "items": {"$ref": "#/$defs/stage"}}
+  },
+  "$defs": {
+    "criterion": {
+      "type": "object",
+      "required": ["id", "text", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "minLength": 1}, "text": {"type": "string", "minLength": 1},
+        "mandatory": {"type": "boolean"}, "status": {"enum": ["pending", "in_review", "verified", "not_applicable"]},
+        "reason": {"type": "string", "minLength": 1}, "approval_role": {"type": "string", "minLength": 1}, "approval_gate": {"type": "string", "minLength": 1},
+        "approved_by": {"type": "string", "minLength": 1}, "approved_at": {"type": "string", "minLength": 1}
+      }
+    },
+    "scope": {
+      "type": "object", "additionalProperties": false,
+      "properties": {"artifacts": {"type": "array", "items": {"type": "string", "minLength": 1}}, "paths": {"type": "array", "items": {"type": "string", "minLength": 1}}}
+    },
+    "work": {
+      "type": "object", "required": ["id", "title", "status", "executor", "depends_on", "produces"], "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "minLength": 1}, "title": {"type": "string", "minLength": 1},
+        "status": {"enum": ["planned", "ready", "in_progress", "review", "done", "needs_clarification", "blocked", "deferred", "cancelled"]},
+        "executor": {"type": "string", "minLength": 1}, "depends_on": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "produces": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "criterion_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "criterion_evidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "scope": {"$ref": "#/$defs/scope"}, "plan": {"type": "string", "minLength": 1}
+      }
+    },
+    "stage": {
+      "type": "object", "required": ["id", "title", "status", "depends_on"], "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^STAGE-[0-9]{2}$"}, "title": {"type": "string", "minLength": 1},
+        "status": {"enum": ["not_started", "planning", "ready", "active", "in_review", "blocked", "completed"]},
+        "depends_on": {"type": "array", "items": {"type": "string", "minLength": 1}}, "entry_criteria": {"type": "array", "items": {"$ref": "#/$defs/criterion"}},
+        "exit_criteria": {"type": "array", "items": {"$ref": "#/$defs/criterion"}}, "required_artifacts": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "work_items": {"type": "array", "items": {"$ref": "#/$defs/work"}}, "plan": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["provider", "base_revision", "result", "delivery", "artifacts", "unresolved", "evidence", "changes", "lifecycle_changes"],
+  "properties": {
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "revision"],
+      "properties": {
+        "id": {"const": "frontend-standard"},
+        "revision": {"const": "9e5b44c6f3e33d3c0cd762f3dcb6aa15ce1a4968"}
+      }
+    },
+    "base_revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "result": {"enum": ["complete", "partial", "blocked", "failure"]},
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["delivered", "gaps", "unverified"],
+      "properties": {
+        "delivered": {"$ref": "#/$defs/strings"},
+        "gaps": {"$ref": "#/$defs/strings"},
+        "unverified": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "artifacts": {"$ref": "#/$defs/strings"},
+    "unresolved": {"$ref": "#/$defs/strings"},
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tests", "build", "accessibility", "security"],
+      "properties": {
+        "tests": {"$ref": "#/$defs/command_evidence"},
+        "build": {"$ref": "#/$defs/command_evidence"},
+        "accessibility": {"$ref": "#/$defs/check_evidence"},
+        "security": {"$ref": "#/$defs/check_evidence"}
+      }
+    },
+    "changes": {
+      "type": "object",
+      "propertyNames": {"pattern": "^staging/frontend(?:/[^/]+)+$"},
+      "additionalProperties": {"type": "string"}
+    },
+    "lifecycle_changes": {"type": "array", "maxItems": 0},
+    "project_state_changes": {"type": "array", "maxItems": 0},
+    "control_file_changes": {"type": "array", "maxItems": 0}
+  },
+  "$defs": {
+    "strings": {"type": "array", "items": {"type": "string", "pattern": "\\S"}},
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "command_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "exit_code", "summary", "output_sha256"],
+      "properties": {
+        "command": {"type": "string", "pattern": "\\S"},
+        "exit_code": {"type": "integer"},
+        "summary": {"type": "string", "pattern": "\\S"},
+        "output_sha256": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "check_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "status", "summary", "output_sha256"],
+      "properties": {
+        "method": {"type": "string", "pattern": "\\S"},
+        "status": {"enum": ["passed", "partial", "failed", "not_applicable"]},
+        "summary": {"type": "string", "pattern": "\\S"},
+        "output_sha256": {"$ref": "#/$defs/digest"}
+      }
+    }
+  }
+}

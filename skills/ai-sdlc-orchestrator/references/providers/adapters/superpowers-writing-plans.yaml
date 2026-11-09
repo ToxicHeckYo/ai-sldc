@@ -1,0 +1,23 @@
+schema_version: 1
+provider:
+  id: superpowers-writing-plans
+  kind: external
+  source: https://github.com/obra/superpowers/tree/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/writing-plans
+  revision: 2ce8aa15d05bd57213e6f746f953aafb7ded7a8b
+  integrity: sha256:a6c67c1900064347c2a329990dd3c555657c51c3ec53b259a08aa01a2c26139a
+  evaluated_at: "2026-11-04"
+  source_files: [{path: skills/writing-plans/SKILL.md, url: https://raw.githubusercontent.com/obra/superpowers/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/writing-plans/SKILL.md, git_blob: 4cf0275d88d67aa4ef09f4bbca9970ed6ff74a00, sha256: a6c67c1900064347c2a329990dd3c555657c51c3ec53b259a08aa01a2c26139a}]
+capability: {id: planning.implementation, contract_version: 1}
+raw_output_schema: references/providers/adapters/schemas/superpowers-writing-plans-result.schema.json
+dispatch: {task_template: references/prompts/planning-implementation.md, readable_scope: [docs], writable_scope: [staging], governance: {forbidden_actions: [canonical_state_write], protected_paths: [docs/project-control, docs/artifact-register.yaml, docs/product-definition/sources/source-register.yaml, PROJECT_STATUS.md]}}
+result_mapping:
+  status: {path: outcome, values: {complete: completed, partial: partial, blocked: blocked, failure: failed}}
+  sections: {tasks: sections.tasks, dependencies: sections.dependencies, verification: sections.verification, work_item: sections.work_item}
+  evidence:
+    design: {path: evidence.design, type: string}
+    requirements: {path: evidence.requirements, type: string}
+    traceability: {path: evidence.traceability, type: array, item_required_fields: [source, target, relation]}
+  files_path: files
+  produced_path: produced
+  unresolved_path: unresolved
+  forbidden_nonempty_paths: [lifecycle_changes, project_state_changes, control_file_changes]

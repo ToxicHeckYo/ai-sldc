@@ -1,0 +1,30 @@
+id: frontend.delivery
+version: 1
+applicable_when: [frontend-work-is-in-scope]
+dispatch:
+  required_inputs: [work_item, acceptance_criteria, project_context]
+  optional_inputs: [requested_scope]
+  task_template: references/providers/templates/frontend-standard.md
+  readable_scope: [src, tests, docs, package.json, lockfiles]
+  writable_scope: [staging/frontend]
+  forbidden_actions: [lifecycle_transition, project_state_write, control_file_write, push, merge, deploy]
+result:
+  required_sections: [delivered, gaps, unverified]
+  allowed_formats: [yaml, json]
+  required_evidence: [tests, build, accessibility, security]
+  expected_artifacts: [frontend-delivery]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [unresolved]
+integration:
+  mappings: [frontend-standard]
+  structural_checks: [required-sections, required-evidence, frontend-writable-scope]
+  semantic_checks: [standard-version-reported, checked-scope-bounded, lifecycle-state-unchanged, tests-exit-zero, build-exit-zero, accessibility-success, security-success]
+  human_approvals: []
+  acceptance: [tests-pass, build-passes, accessibility-evidence, security-evidence]
+  partial_result_policy: require_human_decision
+  retry_policy: same_provider
+parallelism:
+  allowed: conditional
+  partition_by: [requested_scope]
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

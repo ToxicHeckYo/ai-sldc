@@ -1,0 +1,29 @@
+id: provider-result.integrate
+version: 1
+dispatch:
+  required_inputs: [provider_result, capability_contract]
+  optional_inputs: [human_approval]
+  task_template: references/prompts/provider-result-integrate.md
+  readable_scope: [staging]
+  writable_scope: [staging]
+  forbidden_actions: [direct_canonical_write]
+result:
+  required_sections: [normalized_result, validation, integration_decision]
+  allowed_formats: [yaml, json]
+  required_evidence: [provider-result, scope-hash]
+  expected_artifacts: [integration-report]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [canonical-artifacts]
+  structural_checks: [contract, writable-scope]
+  semantic_checks: [capability-rules]
+  human_approvals: [contract-required]
+  acceptance: [validated-result]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism:
+  allowed: conditional
+  partition_by: [artifact]
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

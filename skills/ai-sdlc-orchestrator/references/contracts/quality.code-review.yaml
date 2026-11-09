@@ -1,0 +1,29 @@
+id: quality.code-review
+version: 1
+dispatch:
+  required_inputs: [implementation, acceptance_criteria]
+  optional_inputs: [review_scope]
+  task_template: references/prompts/quality-code-review.md
+  readable_scope: [src, tests, docs, staging]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write]
+result:
+  required_sections: [review, findings, decision]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [review, scope]
+  expected_artifacts: [test-report]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [test-report]
+  structural_checks: [scope]
+  semantic_checks: [acceptance-criteria]
+  human_approvals: []
+  acceptance: [review-approved]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

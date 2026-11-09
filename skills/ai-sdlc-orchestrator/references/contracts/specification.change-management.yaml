@@ -1,0 +1,29 @@
+id: specification.change-management
+version: 1
+dispatch:
+  required_inputs: [change_request, current_specification]
+  optional_inputs: [impact_analysis]
+  task_template: references/prompts/specification-change-management.md
+  readable_scope: [docs/specifications, docs]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, unapproved_apply]
+result:
+  required_sections: [impact, delta, preview, fingerprint]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [current-specification, approved-preview, production-deployment]
+  expected_artifacts: [specification-change, archive-record]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [open_questions]
+integration:
+  mappings: [specification-change]
+  structural_checks: [schema, fingerprint, source-hashes, result-hashes]
+  semantic_checks: [impact-analysis, requirement-targets, deployment-assurance-external-asserted]
+  human_approvals: [specification-change]
+  acceptance: [approved-preview, verified-application, immutable-archive]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

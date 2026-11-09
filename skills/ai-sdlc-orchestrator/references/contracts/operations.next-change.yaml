@@ -1,0 +1,30 @@
+id: operations.next-change
+version: 1
+applicable_when: [monitoring-is-recorded]
+dispatch:
+  required_inputs: [monitoring_record, next_change_request, project_context]
+  optional_inputs: [operational_priorities]
+  task_template: references/prompts/change-management.md
+  readable_scope: [docs, staging]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, unapproved_change, release_authority_inference]
+result:
+  required_sections: [next_change, operations, work_item]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [monitoring, incident-record, feedback-record, next-change-request, traceability]
+  expected_artifacts: [operations_document]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [unresolved]
+integration:
+  mappings: [operations_document]
+  structural_checks: [monitoring-record, incident-record, feedback-record, change-request, traceability]
+  semantic_checks: [operational-feedback, incident-record, feedback-record, human-change-request, human-provenance, external-assurance]
+  human_approvals: []
+  acceptance: [external-asserted-report, automation-adapter-result, next-human-change-request]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

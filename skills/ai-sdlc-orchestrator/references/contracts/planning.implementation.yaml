@@ -1,0 +1,29 @@
+id: planning.implementation
+version: 1
+dispatch:
+  required_inputs: [approved_design, requirements]
+  optional_inputs: [constraints]
+  task_template: references/prompts/planning-implementation.md
+  readable_scope: [docs]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write]
+result:
+  required_sections: [tasks, dependencies, verification]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [design, requirements]
+  expected_artifacts: [technical-specification-manifest]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [technical-specification-manifest]
+  structural_checks: [dag]
+  semantic_checks: [requirements-coverage]
+  human_approvals: []
+  acceptance: [executable-plan]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism:
+  allowed: conditional
+  partition_by: [scope]
+  integration_capability: provider-result.integrate
+missing_provider_policy: fallback

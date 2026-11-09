@@ -1,0 +1,27 @@
+id: change.deployment
+version: 1
+dispatch:
+  required_inputs: [change_request, deployment_evidence]
+  optional_inputs: [implementation_evidence, preview]
+  task_template: references/prompts/change-management.md
+  readable_scope: [docs, specifications/current]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write, unapproved_apply, fabricated_deployment]
+result:
+  required_sections: [implementation, deployment, verification]
+  allowed_formats: [markdown, yaml, json]
+  required_evidence: [implementation-evidence, production-deployment, approved-preview]
+  expected_artifacts: [deployment-record, archive-record]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: [open_questions]
+integration:
+  mappings: [change-deployment]
+  structural_checks: [preview-fingerprint, source-hashes, result-hashes]
+  semantic_checks: [production-environment, external-assurance, deployment-status]
+  human_approvals: [specification-change]
+  human_approval_roles: {specification-change: product-owner}
+  acceptance: [external-deployment-evidence]
+  partial_result_policy: require_human_decision
+  retry_policy: replace_provider
+parallelism: {allowed: never, partition_by: [], integration_capability: provider-result.integrate}
+missing_provider_policy: stop

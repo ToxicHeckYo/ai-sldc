@@ -1,0 +1,29 @@
+id: traceability.validation
+version: 1
+dispatch:
+  required_inputs: [snapshot]
+  optional_inputs: [required_chain]
+  task_template: references/prompts/traceability-validation.md
+  readable_scope: [docs]
+  writable_scope: [staging]
+  forbidden_actions: [canonical_state_write]
+result:
+  required_sections: [nodes, edges, findings]
+  allowed_formats: [yaml, json]
+  required_evidence: [registry-links]
+  expected_artifacts: [traceability-report]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [traceability-report]
+  structural_checks: [references]
+  semantic_checks: [required-chain]
+  human_approvals: []
+  acceptance: [no-dangling-links]
+  partial_result_policy: reject
+  retry_policy: same_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop

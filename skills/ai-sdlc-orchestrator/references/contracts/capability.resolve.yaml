@@ -1,0 +1,29 @@
+id: capability.resolve
+version: 1
+dispatch:
+  required_inputs: [capability_id, contract_version]
+  optional_inputs: [project_lock, environment]
+  task_template: references/prompts/capability-resolution.md
+  readable_scope: [references/contracts, references/providers]
+  writable_scope: []
+  forbidden_actions: [network_install, canonical_state_write]
+result:
+  required_sections: [provider, source, revision, integrity, status]
+  allowed_formats: [yaml, json]
+  required_evidence: [contract_version, checksum]
+  expected_artifacts: [provider-resolution]
+  statuses: [completed, partial, blocked, failed]
+  open_questions: []
+integration:
+  mappings: [provider-resolution]
+  structural_checks: [lock-schema, checksum]
+  semantic_checks: [contract-version, environment]
+  human_approvals: []
+  acceptance: [deterministic-resolution, fail-closed-integrity]
+  partial_result_policy: reject
+  retry_policy: replace_provider
+parallelism:
+  allowed: never
+  partition_by: []
+  integration_capability: provider-result.integrate
+missing_provider_policy: stop
